@@ -53,8 +53,9 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "solaris-113" do |box|
-    box.vm.box = "plaurin/solaris-11_3"
-    box.vm.box_version = "1"
+    # we use a local box for licensing reasons, see recipes/Solaris113.txt
+    box.vm.box = "solaris113-v1.box"
+    #box.vm.box_version = "1"
     box.vm.hostname = "solaris113.local"
     box.vm.network "private_network", ip: "192.168.48.105"
     box.vm.provision "shell", path: "solaris-113.sh"
