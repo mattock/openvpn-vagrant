@@ -42,7 +42,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "openbsd-6" do |box|
     box.vm.box = "generic/openbsd6"
-    box.vm.box_version = "1.2.35"
+    box.vm.box_version = "1.2.38"
     box.vm.hostname = "openbsd-6.local"
     box.vm.network "private_network", ip: "192.168.48.104"
     box.vm.provision "shell", path: "openbsd-6.sh"
@@ -82,6 +82,19 @@ Vagrant.configure("2") do |config|
     box.vm.hostname = "openvpn-build.local"
     box.vm.network "private_network", ip: "192.168.48.107"
     box.vm.provision "shell", path: "setup-generic-buildsystem.sh"
+    box.vm.provider "virtualbox" do |vb|
+      vb.gui = false
+      vb.memory = 768
+    end
+  end
+
+  config.vm.define "netbsd-7" do |box|
+    box.vm.box = "netbsd/NetBSD-7.0"
+    box.vm.box_version = "1.0.0"
+    box.vm.hostname = "netbsd-7.local"
+    box.vm.network "private_network", ip: "192.168.48.107"
+    box.vm.provision "shell", path: "netbsd-7.sh"
+    box.vm.synced_folder ".", "/vagrant", disabled: true
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
       vb.memory = 768
