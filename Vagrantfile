@@ -93,7 +93,7 @@ Vagrant.configure("2") do |config|
     box.vm.box = "netbsd/NetBSD-7.0"
     box.vm.box_version = "1.0.0"
     box.vm.hostname = "netbsd-7.local"
-    box.vm.network "private_network", ip: "192.168.48.107"
+    box.vm.network "private_network", ip: "192.168.48.108"
     box.vm.provision "shell", path: "netbsd-7.sh"
     box.vm.synced_folder ".", "/vagrant", disabled: true
     box.vm.provider "virtualbox" do |vb|
