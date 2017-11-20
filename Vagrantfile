@@ -9,6 +9,7 @@ Vagrant.configure("2") do |config|
     box.vm.hostname = "centos-7.local"
     box.vm.network "private_network", ip: "192.168.48.101"
     box.vm.provision "shell", path: "centos-7.sh"
+    box.vm.provision "shell", path: "install-mbedtls.sh"
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
       vb.memory = 768
