@@ -30,15 +30,18 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "freebsd-11" do |box|
-    box.vm.box = "freebsd/FreeBSD-11.0-STABLE"
-    box.vm.box_version = "2017.05.11.2"
-    box.vm.base_mac = "0800270A831A"
+    box.ssh.shell = "sh"
+    box.vm.box = "openvpn/FreeBSD-11.1p3"
+    box.vm.box_version = "1"
     box.vm.hostname = "freebsd-11.local"
     box.vm.network "private_network", ip: "192.168.48.103"
+    box.vm.synced_folder ".", "/vagrant", type: "rsync"
     box.vm.provision "shell", path: "freebsd-11.sh"
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
       vb.memory = 768
+      vb.customize ["modifyvm", :id, "--usb", "on"]
+      vb.customize ["modifyvm", :id, "--usbehci", "off"]
     end
   end
 
