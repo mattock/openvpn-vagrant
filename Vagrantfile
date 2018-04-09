@@ -8,6 +8,7 @@ Vagrant.configure("2") do |config|
     box.vm.box_version = "1710.01"
     box.vm.hostname = "centos-7.local"
     box.vm.network "private_network", ip: "192.168.48.101"
+    box.vm.synced_folder ".", "/vagrant", type: "virtualbox"
     box.vm.provision "shell", path: "centos-7.sh"
     box.vm.provision "shell", path: "install-mbedtls.sh"
     box.vm.provision "shell", path: "install-fping.sh"
@@ -22,6 +23,7 @@ Vagrant.configure("2") do |config|
     box.vm.box_version = "9.2.0"
     box.vm.hostname = "debian-9.local"
     box.vm.network "private_network", ip: "192.168.48.102"
+    box.vm.synced_folder ".", "/vagrant", type: "virtualbox"
     box.vm.provision "shell", path: "debian-9.sh"
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
@@ -75,6 +77,7 @@ Vagrant.configure("2") do |config|
     box.vm.box_version = "20171118.0.0"
     box.vm.hostname = "ubuntu-1604.local"
     box.vm.network "private_network", ip: "192.168.48.106"
+    box.vm.synced_folder ".", "/vagrant", type: "virtualbox"
     box.vm.provision "shell", path: "ubuntu-1604.sh"
     box.vm.provision "shell", path: "install-mbedtls.sh"
     box.vm.provision "shell", path: "install-fping.sh"
@@ -89,6 +92,7 @@ Vagrant.configure("2") do |config|
     box.vm.box_version = "20171118.0.0"
     box.vm.hostname = "openvpn-build.local"
     box.vm.network "private_network", ip: "192.168.48.107"
+    box.vm.synced_folder ".", "/vagrant", type: "virtualbox"
     box.vm.provision "shell", path: "setup-generic-buildsystem.sh"
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
