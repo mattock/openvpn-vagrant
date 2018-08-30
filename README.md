@@ -18,6 +18,7 @@ OpenVPN on them. Both OpenSSL and MbedTLS builds are supported out of the box:
 * openbsd-6
 * solaris-113
 * ubuntu-1604
+* ubuntu-1804
 
 Note that it is not possible to legally distribute the base box for solaris-113; 
 please refer to [recipes/Solaris113.txt](recipes/Solaris113.txt) for details.

@@ -108,4 +108,18 @@ Vagrant.configure("2") do |config|
       vb.memory = 768
     end
   end
+
+  config.vm.define "ubuntu-1804" do |box|
+    box.vm.box = "ubuntu/bionic64"
+    box.vm.box_version = "20180823.0.0"
+    box.vm.hostname = "ubuntu-1804.local"
+    box.vm.network "private_network", ip: "192.168.48.109"
+    box.vm.provision "shell", path: "ubuntu-1604.sh"
+    box.vm.provision "shell", path: "install-mbedtls.sh"
+    box.vm.provision "shell", path: "install-fping.sh"
+    box.vm.provider "virtualbox" do |vb|
+      vb.gui = false
+      vb.memory = 768
+    end
+  end
 end
