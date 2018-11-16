@@ -133,7 +133,10 @@ Vagrant.configure("2") do |config|
     box.vm.hostname = "openvpn-build-bionic.local"
     box.vm.network "private_network", ip: "192.168.48.110"
     box.vm.synced_folder ".", "/vagrant", type: "virtualbox"
-    box.vm.provision "shell", path: "setup-generic-buildsystem.sh"
+    box.vm.provision "shell" do |s|
+      s.path = "setup-generic-buildsystem.sh"
+      s.args = ["-f"]
+    end
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
       vb.memory = 1024

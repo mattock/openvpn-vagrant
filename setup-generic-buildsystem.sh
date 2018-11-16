@@ -14,6 +14,22 @@ NSIS_PACKAGES="nsis nsis-common nsis-doc nsis-pluginapi"
 GIT_PKG="git"
 
 if [ "${CODENAME}" = "bionic" ]; then
+    if ! [ "$1" = "-f" ]; then
+        echo "ERROR: this script will temporarily remove curl to enable building of"
+        echo "osslsigncode which requires OpenSSL 1.0 development libraries. While"
+        echo "curl will be reinstalled later, its removal may have unwanted side-"
+        echo "effects. It is thus recommended to run this script only on a dedicated"
+        echo "build host, e.g. inside Vagrant:"
+        echo
+        echo "https://github.com/OpenVPN/openvpn-vagrant"
+        echo
+        echo "You can proceed by running this script with the -f option:"
+        echo
+        echo "./setup-generic-buildsystem.sh -f"
+        echo
+        exit 1
+    fi
+
     OSSLSIGNCODE_DEPS="libcurl-openssl1.0-dev libssl1.0-dev libcurl3 build-essential"
 elif [ "${CODENAME}" = "xenial" ]; then
     OSSLSIGNCODE_DEPS="libssl-dev libcurl4-openssl-dev build-essential"
@@ -31,8 +47,10 @@ check_if_root() {
 
 install_packages() {
     apt-get update
+
+    # Remove curl to enable installation of openssl 1.0 devel package
     if [ "${CODENAME}" = "bionic" ]; then
-        apt-get -y remove libcurl curl
+        apt-get -y remove libcurl4 curl
     fi
     apt-get -y install $BUILD_DEPS $GIT_PKG $GNUEABI_PKG $MINGW_PACKAGES $NSIS_PACKAGES
 }
@@ -47,6 +65,11 @@ install_osslsigncode() {
     make
     make install
     cd ..
+
+    # Reinstall curl
+    if [ "${CODENAME}" = "bionic" ]; then
+        apt-get -y install libcurl4 curl
+    fi
 }
 
 clone_openvpn_build() {
