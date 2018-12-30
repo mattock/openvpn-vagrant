@@ -5,7 +5,7 @@
 # This script works on Ubuntu 16.04 and 18.04.
 
 CODENAME=`lsb_release -cs`
-BUILD_DEPS="mingw-w64 man2html dos2unix nsis unzip wget curl autoconf libtool gcc-arm-linux-gnueabi"
+BUILD_DEPS="libpam0g-dev mingw-w64 man2html dos2unix nsis unzip wget curl autoconf libtool gcc-arm-linux-gnueabi"
 OSSLSIGNCODE_URL="http://sourceforge.net/projects/osslsigncode/files/latest/download"
 OSSLSIGNCODE_PACKAGE="osslsigncode-latest.tar.gz"
 OPENVPN_BUILD_URL="https://github.com/OpenVPN/openvpn-build.git"
