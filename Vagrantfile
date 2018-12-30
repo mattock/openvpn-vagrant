@@ -137,9 +137,23 @@ Vagrant.configure("2") do |config|
       s.path = "setup-generic-buildsystem.sh"
       s.args = ["-f"]
     end
+    box.vm.provision "shell", path: "setup-samba-share.sh"
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
       vb.memory = 1024
+    end
+  end
+
+  config.vm.define "msibuilder" do |box|
+    box.vm.box = "mwrock/Windows2016"
+    box.vm.box_version = "0.3.0"
+    box.vm.hostname = "msibuilder"
+    box.vm.network "private_network", ip: "192.168.48.112"
+    box.vm.synced_folder ".", "/vagrant", type: "virtualbox"
+    box.vm.provision "shell", path: "msibuilder.ps1"
+    box.vm.provider "virtualbox" do |vb|
+      vb.gui = false
+      vb.memory = 3072
     end
   end
 end
