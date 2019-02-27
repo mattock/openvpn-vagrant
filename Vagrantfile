@@ -144,6 +144,18 @@ Vagrant.configure("2") do |config|
     end
   end
 
+  config.vm.define "sbuild" do |box|
+    box.vm.box = "ubuntu/bionic64"
+    box.vm.box_version = "20180823.0.0"
+    box.vm.hostname = "sbuild.local"
+    box.vm.network "private_network", ip: "192.168.48.111"
+    box.vm.provision "shell", path: "sbuild.sh"
+    box.vm.provider "virtualbox" do |vb|
+      vb.gui = false
+      vb.memory = 1024
+    end
+  end
+
   config.vm.define "msibuilder" do |box|
     box.vm.box = "mwrock/Windows2016"
     box.vm.box_version = "0.3.0"
