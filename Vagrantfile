@@ -87,19 +87,6 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  config.vm.define "openvpn-build" do |box|
-    box.vm.box = "ubuntu/xenial64"
-    box.vm.box_version = "20171118.0.0"
-    box.vm.hostname = "openvpn-build.local"
-    box.vm.network "private_network", ip: "192.168.48.107"
-    box.vm.synced_folder ".", "/vagrant", type: "virtualbox"
-    box.vm.provision "shell", path: "setup-generic-buildsystem.sh"
-    box.vm.provider "virtualbox" do |vb|
-      vb.gui = false
-      vb.memory = 768
-    end
-  end
-
   config.vm.define "netbsd-7" do |box|
     box.vm.box = "netbsd/NetBSD-7.0"
     box.vm.box_version = "1.0.0"
