@@ -11,7 +11,6 @@ Vagrant.configure("2") do |config|
     box.vm.synced_folder ".", "/vagrant", type: "virtualbox"
     box.vm.provision "shell", path: "centos-7.sh"
     box.vm.provision "shell", path: "install-mbedtls.sh"
-    box.vm.provision "shell", path: "install-fping.sh"
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
       vb.memory = 768
