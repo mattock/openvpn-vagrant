@@ -13,6 +13,7 @@ OpenVPN on them. Both OpenSSL and MbedTLS builds are supported out of the box:
 
 * centos-7
 * debian-9
+* debian-10
 * freebsd-11
 * netbsd-7
 * openbsd-6

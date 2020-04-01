@@ -137,8 +137,9 @@ Vagrant.configure("2") do |config|
       s.path = "setup-generic-buildsystem.sh"
       s.args = ["-f"]
     end
+  end
 
-    config.vm.define "sbuild" do |box|
+  config.vm.define "sbuild" do |box|
     box.vm.box = "ubuntu/bionic64"
     box.vm.box_version = "20180823.0.0"
     box.vm.hostname = "sbuild.local"
@@ -147,6 +148,19 @@ Vagrant.configure("2") do |config|
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
       vb.memory = 1024
+    end
+  end
+
+  config.vm.define "debian-10" do |box|
+    box.vm.box = "debian/contrib-buster64"
+    box.vm.box_version = "10.3.0"
+    box.vm.hostname = "debian-10.local"
+    box.vm.network "private_network", ip: "192.168.48.112"
+    box.vm.synced_folder ".", "/vagrant", type: "virtualbox"
+    box.vm.provision "shell", path: "debian-10.sh"
+    box.vm.provider "virtualbox" do |vb|
+      vb.gui = false
+      vb.memory = 768
     end
   end
 end
