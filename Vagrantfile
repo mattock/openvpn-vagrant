@@ -122,18 +122,7 @@ Vagrant.configure("2") do |config|
       s.path = "setup-generic-buildsystem.sh"
       s.args = ["-f"]
     end
-  end
-
-  config.vm.define "sbuild" do |box|
-    box.vm.box = "ubuntu/bionic64"
-    box.vm.box_version = "20180823.0.0"
-    box.vm.hostname = "sbuild.local"
-    box.vm.network "private_network", ip: "192.168.48.111"
-    box.vm.provision "shell", path: "sbuild.sh"
-    box.vm.provider "virtualbox" do |vb|
-      vb.gui = false
-      vb.memory = 1024
-    end
+    box.vm.provision "shell", path: "setup-samba-share.sh"
   end
 
   config.vm.define "sbuild" do |box|
@@ -157,6 +146,19 @@ Vagrant.configure("2") do |config|
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
       vb.memory = 2048
+    end
+  end
+
+  config.vm.define "msibuilder" do |box|
+    box.vm.box = "mwrock/Windows2016"
+    box.vm.box_version = "0.3.0"
+    box.vm.hostname = "msibuilder"
+    box.vm.network "private_network", ip: "192.168.48.113"
+    box.vm.synced_folder ".", "/vagrant", type: "virtualbox"
+    box.vm.provision "shell", path: "msibuilder.ps1"
+    box.vm.provider "virtualbox" do |vb|
+      vb.gui = false
+      vb.memory = 3072
     end
   end
 end
