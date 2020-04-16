@@ -145,7 +145,7 @@ Vagrant.configure("2") do |config|
     box.vm.box_version = "20191030.0.0"
     box.vm.hostname = "oas.local"
     box.vm.network "private_network", ip: "192.168.48.112"
-    #box.vm.provision "shell", path: "oas.sh"
+    box.vm.provision "shell", path: "oas.sh"
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
       vb.memory = 2048
