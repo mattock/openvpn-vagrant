@@ -122,8 +122,9 @@ Vagrant.configure("2") do |config|
       s.path = "setup-generic-buildsystem.sh"
       s.args = ["-f"]
     end
+  end
 
-    config.vm.define "sbuild" do |box|
+  config.vm.define "sbuild" do |box|
     box.vm.box = "ubuntu/bionic64"
     box.vm.box_version = "20180823.0.0"
     box.vm.hostname = "sbuild.local"
