@@ -11,7 +11,7 @@ OPENVPN_BUILD_URL="https://github.com/OpenVPN/openvpn-build.git"
 MINGW_PACKAGES="mingw-w64 mingw-w64-common mingw-w64-i686-dev mingw-w64-x86-64-dev"
 NSIS_PACKAGES="nsis nsis-common nsis-doc nsis-pluginapi"
 GIT_PKG="git"
-OSSLSIGNCODE_DEPS="build-essential autoconf libtool libssl-dev python3-pkgconfig libcurl4-gnutls-dev"
+OSSLSIGNCODE_DEPS="build-essential autoconf libtool libssl-dev python3-pkgconfig libcurl4-openssl-dev libgsf-1-dev"
 
 check_if_root() {
     if ! [ `whoami` = "root" ]; then
