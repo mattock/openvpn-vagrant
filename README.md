@@ -67,9 +67,8 @@ For now you need to switch to the codebase that has MSI support:
     $ git fetch rozmansi
     $ git checkout -b msi rozmansi/feature/msi
 
-Then build both 32-bit and 64-bit binaries. Note that OpenVPN URL is customized:
-this is necessary before rozmansi's MSI patches have been merged into OpenVPN
-Git "master":
+Make sure that OPENVPN_URL is pointing to a recent OpenVPN 2.5 tarball which
+has the MSI support patches. Then build both 32-bit and 64-bit binaries:
 
     $ cd generic
     $ OPENVPN_URL=http://build.openvpn.net/downloads/temp/msi/openvpn-2.5_git.tar.gz IMAGEROOT=`pwd`/image-win32 CHOST=i686-w64-mingw32 CBUILD=x86_64-pc-linux-gnu ./build
