@@ -122,6 +122,7 @@ Vagrant.configure("2") do |config|
       s.path = "setup-generic-buildsystem.sh"
       s.args = ["-f"]
     end
+    box.vm.provision "shell", path: "setup-samba-share.sh"
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
       vb.memory = 1024
