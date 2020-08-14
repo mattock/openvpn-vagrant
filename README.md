@@ -77,6 +77,22 @@ Then from a Powershell session produce the MSI packages:
     PS> cd O:\windows-msi
     PS> cscript build.wsf msi
 
+If you want to code-sign the files in the MSI installer append something like this to the ./build command-line:
+
+    --sign --sign-pkcs12=digicert-user-mode-2022.pfx --sign-pkcs12-pass=secret \
+    --sign-timestamp=http://timestamp.verisign.com/scripts/timstamp.dll
+
+You also probably want to sign the MSI files. You can do this with
+osslsigncode on openvpn-build-bionic:
+
+    $ cd openvpn-build/generic
+    $ osslsigncode sign -h sha2 -pkcs12 digicert-user-mode-2022.pfx -pass secret \
+      -t http://timestamp.verisign.com/scripts/timstamp.dll \
+      -in ../windows-msi/image/OpenVPN-2.5-beta1-x86.msi \
+      -out ../windows-msi/image/OpenVPN-2.5-beta1-x86.msi.signed
+
+Repeat the process for x86 and amd64.
+
 # TODO
 
 * Add t_client style test server with multiple server instances with differing configurations
