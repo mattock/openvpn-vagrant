@@ -68,11 +68,19 @@ OpenVPN tarball that has MSI support:
     $ OPENVPN_URL=http://build.openvpn.net/downloads/temp/msi/openvpn-2.5_git.tar.gz IMAGEROOT=`pwd`/image-win64 CHOST=x86_64-w64-mingw32 CBUILD=x86_64-pc-linux-gnu ./build
 
 This produces Windows binaries which the msibuilder VM can access via the Samba
-share mounted to O:. To produce MSI installers login to msibuilder:
+share mounted to O:. Next bump the version numbers for MSI:
+
+    $ cd openvpn-build/windows-msi
+    $ ./bump-version.m4.sh
+
+Then edit openvpn-build/windows-msi/version.m4 to have the correct
+PACKAGE_VERSION as well as dependency versions.
+
+To produce MSI installers login to msibuilder:
 
     $ vagrant rdp msibuilder
 
-Then from a Powershell session produce the MSI packages:
+Then in a Powershell session go to O:\windows-msi and build the MSI packages:
 
     PS> cd O:\windows-msi
     PS> cscript build.wsf msi
