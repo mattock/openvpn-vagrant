@@ -1,7 +1,5 @@
 #!/bin/sh
 #
-# Clean up all Docker stuff except for the volume, which we want to persist
-
 BASEDIR=/vagrant/buildbot-host
 
 # Get configuration parameters
