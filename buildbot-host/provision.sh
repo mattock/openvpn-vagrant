@@ -6,9 +6,9 @@ BASEDIR=/vagrant/buildbot-host
 VOLUME_DIR=/var/lib/docker/volumes/buildmaster/_data/
 
 # Get configuration parameters
-. $BASEDIR/params
+. $BASEDIR/buildmaster/params
 
- https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
+# https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
 apt-get update
 apt-get -y install apt-transport-https ca-certificates curl gnupg lsb-release
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor --yes -o /usr/share/keyrings/docker-archive-keyring.gpg
@@ -16,8 +16,7 @@ echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] 
 apt-get update
 apt-get -y install docker-ce docker-ce-cli containerd.io
 
-# Build the containers
-docker build -f $BASEDIR/Dockerfile.buildmaster -t openvpn_community/buildbot-master:$BUILDMASTER_IMAGE_TAG .
+CWD=`pwd`
 
 # Create network for buildmaster and the workers
 docker network create --driver bridge buildbot-net

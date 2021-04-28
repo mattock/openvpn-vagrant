@@ -5,9 +5,10 @@
 BASEDIR=/vagrant/buildbot-host
 
 # Get configuration parameters
-. $BASEDIR/params
+. $BASEDIR/buildmaster/params
 
 docker container stop buildmaster
 docker container rm buildmaster
+docker container stop buildbot-worker-ubuntu-2004
+docker container rm buildbot-worker-ubuntu-2004
 docker network rm buildbot-net
-docker image rm openvpn_community/buildbot-master:$BUILDMASTER_IMAGE_TAG
