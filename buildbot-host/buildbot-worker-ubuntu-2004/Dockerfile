@@ -5,21 +5,16 @@ MAINTAINER OpenVPN Community Project
 COPY buildbot.tac /buildbot/
 
 USER root
+
 ARG DEBIAN_FRONTEND=noninteractive
 
+WORKDIR /buildbot
+
+# Install setup scripts shared by multiple containers
+COPY scripts /buildbot/scripts/
+
+RUN ls -la /buildbot
+
 RUN set -ex; \
-    apt-get update; \
-    apt-get install -y -q --no-install-recommends \
-    build-essential \
-    liblzo2-dev \
-    liblz4-dev \
-    libssl-dev \
-    libpam-dev \
-    libpkcs11-helper-dev \
-    libtool \
-    automake \
-    autoconf \
-    make \
-    cmake \
-    libcmocka-dev \
-    libcmocka0
+    /buildbot/scripts/install-openvpn-build-deps-ubuntu.sh; \
+    rm -rf /buildbot/scripts
