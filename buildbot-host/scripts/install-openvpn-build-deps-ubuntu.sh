@@ -9,6 +9,7 @@ autoconf \
 automake \
 build-essential \
 cmake \
+curl \
 git \
 libcmocka-dev \
 libcmocka0 \

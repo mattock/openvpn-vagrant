@@ -1,46 +1,19 @@
 FROM ubuntu:18.04
-
-RUN set -ex; \
-    apt-get update; \
-    apt-get install -y --no-install-recommends \
-    build-essential \
-    python3-dev \
-    python3-pip \
-    python3-setuptools \
-    python3-wheel \
-    ; \
-    rm -rf /var/lib/apt/lists/*
-
-ENV BUILDBOT_VERSION 3.1.0
-RUN pip3 install --upgrade pip && \
-    pip --no-cache-dir install twisted[tls] && \
-    pip --no-cache-dir install buildbot_worker==$BUILDBOT_VERSION
-
-RUN useradd --create-home --home-dir=/var/lib/buildbot buildbot
-WORKDIR /var/lib/buildbot
-USER buildbot
-
-COPY buildbot.tac .
-
+MAINTAINER OpenVPN Community Project
+COPY buildbot.tac /buildbot/
 USER root
-ARG DEBIAN_FRONTEND=noninteractive
+WORKDIR /buildbot
+
+COPY scripts/install-openvpn-build-deps-ubuntu.sh /buildbot/
 
 RUN set -ex; \
-    apt-get update; \
-    apt-get install -y -q --no-install-recommends \
-    build-essential \
-    git \
-    liblzo2-dev \
-    liblz4-dev \
-    libssl-dev \
-    libpam-dev \
-    libpkcs11-helper-dev \
-    libtool \
-    automake \
-    autoconf \
-    make \
-    cmake \
-    libcmocka-dev \
-    libcmocka0
+    /buildbot/install-openvpn-build-deps-ubuntu.sh; \
+    rm -f install-openvpn-build-deps-ubuntu.sh
 
-CMD ["twistd", "--pidfile=", "--nodaemon", "--python=buildbot.tac"]
+COPY scripts/install-mbedtls.sh /buildbot/
+RUN set -ex; \
+    /buildbot/install-mbedtls.sh; \
+    rm -f /buildbot/install-mbedtls.sh
+
+RUN set -ex; \
+    rm -rf /buildbot/scripts
