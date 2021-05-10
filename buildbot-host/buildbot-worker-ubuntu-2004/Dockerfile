@@ -1,20 +1,21 @@
 FROM buildbot/buildbot-worker:v3.1.0
 
 MAINTAINER OpenVPN Community Project
-
 COPY buildbot.tac /buildbot/
-
 USER root
-
-ARG DEBIAN_FRONTEND=noninteractive
-
 WORKDIR /buildbot
 
-# Install setup scripts shared by multiple containers
-COPY scripts /buildbot/scripts/
+COPY scripts/install-openvpn-build-deps-ubuntu.sh /buildbot/
 
-RUN ls -la /buildbot
 
 RUN set -ex; \
-    /buildbot/scripts/install-openvpn-build-deps-ubuntu.sh; \
+    /buildbot/install-openvpn-build-deps-ubuntu.sh; \
+    rm -f install-openvpn-build-deps-ubuntu.sh
+
+#COPY scripts/install-mbedtls.sh /buildbot/
+#RUN set -ex; \
+#    /buildbot/install-mbedtls.sh; \
+#    rm -f /buildbot/install-mbedtls.sh
+
+RUN set -ex; \
     rm -rf /buildbot/scripts

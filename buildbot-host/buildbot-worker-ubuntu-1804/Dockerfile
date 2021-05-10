@@ -22,4 +22,25 @@ USER buildbot
 
 COPY buildbot.tac .
 
+USER root
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN set -ex; \
+    apt-get update; \
+    apt-get install -y -q --no-install-recommends \
+    build-essential \
+    git \
+    liblzo2-dev \
+    liblz4-dev \
+    libssl-dev \
+    libpam-dev \
+    libpkcs11-helper-dev \
+    libtool \
+    automake \
+    autoconf \
+    make \
+    cmake \
+    libcmocka-dev \
+    libcmocka0
+
 CMD ["twistd", "--pidfile=", "--nodaemon", "--python=buildbot.tac"]
