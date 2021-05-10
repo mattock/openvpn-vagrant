@@ -5,9 +5,6 @@
 BASEDIR=/vagrant/buildbot-host
 VOLUME_DIR=/var/lib/docker/volumes/buildmaster/_data/
 
-# Get configuration parameters
-. $BASEDIR/buildmaster/params
-
 # https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
 apt-get update
 apt-get -y install apt-transport-https ca-certificates curl gnupg lsb-release

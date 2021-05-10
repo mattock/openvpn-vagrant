@@ -4,11 +4,7 @@
 
 BASEDIR=/vagrant/buildbot-host
 
-# Get configuration parameters
-. $BASEDIR/buildmaster/params
-
-docker container stop buildmaster
-docker container rm buildmaster
-docker container stop buildbot-worker-ubuntu-2004
-docker container rm buildbot-worker-ubuntu-2004
-docker network rm buildbot-net
+for CONTAINER in buildmaster buildbot-worker-ubuntu-1804 buildbot-worker-ubuntu-2004 buildbot-worker-centos-8; do
+  docker container stop $CONTAINER
+  docker container rm $CONTAINER
+done
