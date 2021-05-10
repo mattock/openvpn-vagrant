@@ -1,0 +1,26 @@
+MAINTAINER OpenVPN Community Project
+USER root
+WORKDIR /buildbot
+
+# Install build dependencies for OpenVPN
+COPY scripts/${DEPS_SH} /buildbot/
+RUN set -ex; \
+    /buildbot/${DEPS_SH}; \
+    rm -f ${DEPS_SH}
+
+# Install mbedTLS
+COPY scripts/install-mbedtls.sh /buildbot/
+RUN set -ex; \
+    /buildbot/install-mbedtls.sh; \
+    rm -f /buildbot/install-mbedtls.sh
+
+# Install buildbot
+COPY scripts/install-buildbot.sh /buildbot/
+RUN set -ex; \
+    /buildbot/install-buildbot.sh; \
+    rm -f /buildbot/install-buildbot.sh
+
+COPY buildbot.tac /buildbot/
+
+CMD ["twistd", "--pidfile=", "--nodaemon", "--python=buildbot.tac"]
+

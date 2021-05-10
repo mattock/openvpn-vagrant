@@ -2,8 +2,9 @@
 #
 export DEBIAN_FRONTEND=noninteractive
 
-# Install dependencies
+# Install build dependencies
 apt-get update
+
 apt-get install -y -q --no-install-recommends \
 autoconf \
 automake \
@@ -19,4 +20,10 @@ libpam-dev \
 libpkcs11-helper-dev \
 libssl-dev \
 libtool \
-make
+make \
+python3-dev \
+python3-pip \
+python3-setuptools \
+python3-wheel
+
+rm -rf /var/lib/apt/lists/*

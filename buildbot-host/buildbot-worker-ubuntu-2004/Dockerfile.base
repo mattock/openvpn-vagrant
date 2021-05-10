@@ -1,0 +1,2 @@
+FROM ubuntu:20.04
+ARG DEPS_SH=install-openvpn-build-deps-ubuntu.sh

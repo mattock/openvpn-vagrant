@@ -23,6 +23,9 @@ if [ "$2" = "" ]; then
     usage
 fi
 
+cat $IMAGE/Dockerfile.base snippets/Dockerfile.common > $IMAGE/Dockerfile
+
 # Remove image with same name and tag, if found
 docker image rm openvpn_community/$IMAGE:$TAG 2> /dev/null || true 
 docker build -f $IMAGE/Dockerfile -t openvpn_community/$IMAGE:$TAG .
+rm -f $IMAGE/Dockerfile

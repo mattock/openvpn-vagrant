@@ -1,0 +1,3 @@
+BUILDMASTER=buildmaster
+WORKERNAME=centos-8
+WORKERPASS=vagrant
