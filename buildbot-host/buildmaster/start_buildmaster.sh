@@ -17,4 +17,4 @@ do
 done
 
 # we use exec so that twistd use the pid 1 of the container, and so that signals are properly forwarded
-exec twistd -ny $B/buildbot.tac
+exec twistd --logfile $B/twistd.log -ny $B/buildbot.tac

@@ -8,9 +8,10 @@ EXPOSE 9989/tcp
 ENV BASEDIR=/var/lib/buildbot/masters/default
 RUN mkdir -p $BASEDIR
 
-COPY start_buildmaster.sh $BASEDIR
-COPY master.cfg $BASEDIR
-COPY buildbot.tac $BASEDIR
+COPY buildmaster/start_buildmaster.sh $BASEDIR
+COPY buildmaster/master.cfg $BASEDIR
+COPY buildmaster/worker.ini $BASEDIR
+COPY buildmaster/buildbot.tac $BASEDIR
 
 WORKDIR $BASEDIR
 

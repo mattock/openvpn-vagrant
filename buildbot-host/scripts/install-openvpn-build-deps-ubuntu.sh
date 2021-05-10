@@ -1,4 +1,6 @@
 #!/bin/sh
+#
+export DEBIAN_FRONTEND=noninteractive
 
 # Install dependencies
 apt-get update
