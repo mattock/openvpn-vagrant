@@ -6,13 +6,15 @@ yum -y install epel-release
 yum -y install \
 autoconf \
 cmake \
+git \
 gnutls-devel \
 libtool \
-pkcs11-helper-devel \
+lz4-devel \
 lzo-devel \
 make \
 openssl-devel \
 pam-devel \
+pkcs11-helper-devel \
 python36-devel \
 python3-pip \
 python3-setuptools \
