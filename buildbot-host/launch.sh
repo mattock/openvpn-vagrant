@@ -23,4 +23,5 @@ fi
 
 docker container stop $IMAGE
 docker container rm $IMAGE
-docker container run --name $IMAGE --network buildbot-net --env-file=$IMAGE/env openvpn_community/$IMAGE:$TAG
+#docker container run --name $IMAGE --network buildbot-net --env-file=$IMAGE/env openvpn_community/$IMAGE:$TAG
+docker container run --name $IMAGE --network buildbot-net --volume buildmaster:/var/lib/buildbot/masters/default/persistent openvpn_community/$IMAGE:$TAG
