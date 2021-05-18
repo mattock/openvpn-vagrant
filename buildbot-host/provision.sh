@@ -26,3 +26,6 @@ mkdir -p $VOLUME_DIR/secrets
 chmod 700 $VOLUME_DIR/secrets
 echo $WORKER_PASSWORD > $VOLUME_DIR/secrets/worker-password
 chmod 600 $VOLUME_DIR/secrets/*
+
+# Ensure that "vagrant" user can run Docker commands
+usermod -a -G docker vagrant
