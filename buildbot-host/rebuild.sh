@@ -23,7 +23,15 @@ if [ "$2" = "" ]; then
     usage
 fi
 
-cat $IMAGE/Dockerfile.base snippets/Dockerfile.common > $IMAGE/Dockerfile
+if [ -f "${IMAGE}/Dockerfile.base" ]; then
+  echo "Constructing Dockerfile"
+  cat $IMAGE/Dockerfile.base snippets/Dockerfile.common > $IMAGE/Dockerfile
+elif [ -f "${IMAGE}/Dockerfile" ]; then
+  echo "Using static Dockerfile"
+else
+  echo "ERROR: must have Dockerfile or Dockerfile.base to build!"
+  exit 1
+fi
 
 # Remove image with same name and tag, if found
 docker image rm openvpn_community/$IMAGE:$TAG 2> /dev/null || true 
