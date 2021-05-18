@@ -29,3 +29,14 @@ chmod 600 $VOLUME_DIR/secrets/*
 
 # Ensure that "vagrant" user can run Docker commands
 usermod -a -G docker vagrant
+
+# Ensure that docker is listening on TCP port (for launching latent docker
+# buildslaves)
+mkdir -p /etc/systemd/system/docker.service.d
+cat > /etc/systemd/system/docker.service.d <<EOL
+[Service]
+ExecStart=
+ExecStart=/usr/bin/dockerd -H tcp://172.18.0.1:2375 -H fd:// --containerd=/run/containerd/containerd.sock
+EOL
+systemctl daemon-reload
+systemctl restart docker
