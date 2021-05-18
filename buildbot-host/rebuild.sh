@@ -23,8 +23,11 @@ if [ "$2" = "" ]; then
     usage
 fi
 
+DYNAMIC_DOCKERFILE="no"
+
 if [ -f "${IMAGE}/Dockerfile.base" ]; then
   echo "Constructing Dockerfile"
+  DYNAMIC_DOCKERFILE="yes"
   cat $IMAGE/Dockerfile.base snippets/Dockerfile.common > $IMAGE/Dockerfile
 elif [ -f "${IMAGE}/Dockerfile" ]; then
   echo "Using static Dockerfile"
@@ -36,4 +39,7 @@ fi
 # Remove image with same name and tag, if found
 docker image rm openvpn_community/$IMAGE:$TAG 2> /dev/null || true 
 docker build -f $IMAGE/Dockerfile -t openvpn_community/$IMAGE:$TAG .
-rm -f $IMAGE/Dockerfile
+
+if [ "${DYNAMIC_DOCKERFILE}" = "yes" ]; then
+  rm -f $IMAGE/Dockerfile
+fi
