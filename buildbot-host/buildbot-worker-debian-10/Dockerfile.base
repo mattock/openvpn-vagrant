@@ -1,0 +1,2 @@
+FROM debian:10
+ARG DEPS_SH=install-openvpn-build-deps-ubuntu.sh
