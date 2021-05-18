@@ -2,6 +2,8 @@ FROM buildbot/buildbot-master:v3.1.0
 
 MAINTAINER OpenVPN Community Project
 
+RUN pip3 install docker
+
 EXPOSE 8010/tcp
 EXPOSE 9989/tcp
 
