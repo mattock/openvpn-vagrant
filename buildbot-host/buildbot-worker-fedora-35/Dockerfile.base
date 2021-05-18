@@ -1,2 +1,2 @@
-FROM fedora:34
+FROM fedora:35
 ARG DEPS_SH=install-openvpn-build-deps-fedora.sh
