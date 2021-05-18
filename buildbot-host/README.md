@@ -21,3 +21,41 @@ workers, builders and projects being built.
     * Basic CI is possible inside Docker, connectivity tests are not
 * tap-windows6
 * win-dco
+
+# Usage
+
+## Building the docker images
+
+Buildbot depends on pre-built images. To (re)build a worker:
+
+    cd buildbot-host
+    ./rebuild.sh <name-of-worker> <version-tag>
+
+For example
+
+    ./rebuild.sh buildbot-worker-ubuntu-2004 v1.0.0
+
+To build the master:
+
+    ./rebuild.sh buildmaster v2.0.0
+
+## Launching the buildmaster
+
+Buildmaster uses a separate launch script:
+
+    cd buildbot-host/buildmaster
+    ./launch.sh v2.0.0
+
+where "v2.0.0" is the tag you gave when you built the image.
+
+## Launching buildbot workers
+
+Buildbot launches the docker workers on-demand, so you should only launch
+workers for debugging purposes:
+
+    cd buildbot-host
+    ./launch.sh <name-of-worker> <version-tag>
+
+For example:
+
+    ./launch.sh buildbot-worker-ubuntu-2004 v1.0.0
