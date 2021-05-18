@@ -59,3 +59,13 @@ workers for debugging purposes:
 For example:
 
     ./launch.sh buildbot-worker-ubuntu-2004 v1.0.0
+
+
+# Wiping buildmaster's database
+
+This may be necessary if buildmaster gets stuck with failing latent docker workers
+
+    sudo rm /var/lib/docker/volumes/buildmaster/_data/libstate.sqlite
+
+This way buildmaster stops trying to use the old, broken worker config over and
+over again and stalling while doing so.
