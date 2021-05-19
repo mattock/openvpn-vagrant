@@ -1,12 +1,11 @@
-FROM $BASE_IMAGE
-# Reuse DEPS_SH from pre-build stage
-ARG DEPS_SH
-MAINTAINER OpenVPN Community Project
+FROM $IMAGE 
+LABEL maintainer="OpenVPN Community Project"
 USER root
 WORKDIR /buildbot
 
 # Install build dependencies for OpenVPN
 RUN mkdir -p /buildbot
+ARG DEPS_SH
 COPY scripts/${DEPS_SH} /buildbot/
 RUN set -ex; \
     /buildbot/${DEPS_SH}; \
@@ -17,6 +16,7 @@ COPY scripts/install-mbedtls.sh /buildbot/
 RUN set -ex; \
     /buildbot/install-mbedtls.sh; \
     rm -f /buildbot/install-mbedtls.sh
+
 
 # Install buildbot
 COPY scripts/install-buildbot.sh /buildbot/

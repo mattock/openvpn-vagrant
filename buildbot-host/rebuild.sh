@@ -1,45 +1,48 @@
 #!/bin/sh
 #
 # Rebuild a buildmaster or buildbot worker container
-IMAGE=$1
-TAG=$2
+DIR=$1
 
 usage() {
-    echo "./rebuild.sh <image> <tag>"
+    echo "./rebuild.sh <dir>"
     echo
     echo "Example:"
-    echo "  ./rebuild.sh buildmaster v2.0.0"
-    echo "  ./rebuild.sh buildbot-worker-ubuntu-2004 v1.0.0"
+    echo "  ./rebuild.sh buildmaster"
+    echo "  ./rebuild.sh buildbot-worker-ubuntu-2004"
     echo
     exit 1
 }
 
 
-if [ "$1" = "" ]; then
+if [ "$DIR" = "" ]; then
     usage
 fi
 
-if [ "$2" = "" ]; then
-    usage
+if ! [ -d "$DIR" ]; then
+    echo "ERROR: directory ${DIR} not found!"
+    exit 1
 fi
 
 DYNAMIC_DOCKERFILE="no"
 
-if [ -f "${IMAGE}/Dockerfile.base" ]; then
+if [ -f "${DIR}/Dockerfile.base" ]; then
   echo "Constructing Dockerfile"
   DYNAMIC_DOCKERFILE="yes"
-  cat $IMAGE/Dockerfile.base snippets/Dockerfile.common > $IMAGE/Dockerfile
-elif [ -f "${IMAGE}/Dockerfile" ]; then
+  cat $DIR/Dockerfile.base snippets/Dockerfile.common > $DIR/Dockerfile
+elif [ -f "${DIR}/Dockerfile" ]; then
   echo "Using static Dockerfile"
 else
   echo "ERROR: must have Dockerfile or Dockerfile.base to build!"
   exit 1
 fi
 
+# Get image name and version
+IMAGE=`grep MY_NAME $DIR/Dockerfile|awk 'BEGIN { FS = "\"" }; { print $2 }'`
+TAG=`grep MY_VERSION $DIR/Dockerfile|awk 'BEGIN { FS = "\"" }; { print $2 }'`
+
 # Remove image with same name and tag, if found
-docker image rm openvpn_community/$IMAGE:$TAG 2> /dev/null || true 
-docker build -f $IMAGE/Dockerfile -t openvpn_community/$IMAGE:$TAG .
+docker build -f $DIR/Dockerfile -t openvpn_community/$IMAGE:$TAG .
 
 if [ "${DYNAMIC_DOCKERFILE}" = "yes" ]; then
-  rm -f $IMAGE/Dockerfile
+  rm -f $DIR/Dockerfile
 fi
