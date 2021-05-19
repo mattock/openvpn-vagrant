@@ -1,2 +1,2 @@
-FROM ubuntu:18.04
+ARG IMAGE=ubuntu:18.04
 ARG DEPS_SH=install-openvpn-build-deps-ubuntu.sh

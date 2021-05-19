@@ -1,2 +1,2 @@
-FROM centos:8
+ARG IMAGE=centos:8
 ARG DEPS_SH=install-openvpn-build-deps-centos.sh
