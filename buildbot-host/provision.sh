@@ -36,7 +36,7 @@ mkdir -p /etc/systemd/system/docker.service.d
 cat > /etc/systemd/system/docker.service.d <<EOL
 [Service]
 ExecStart=
-ExecStart=/usr/bin/dockerd -H tcp://172.18.0.1:2375 -H fd:// --containerd=/run/containerd/containerd.sock
+ExecStart=/usr/bin/dockerd -H tcp://0.0.0.0:2375 -H fd:// --containerd=/run/containerd/containerd.sock
 EOL
 systemctl daemon-reload
 systemctl restart docker
