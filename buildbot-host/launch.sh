@@ -1,14 +1,13 @@
 #!/bin/sh
 #
-# Launch a buildmaster or buildbot worker
-IMAGE=$1
-TAG=$2
+# Launch a static buildbot worker
+DIR=$1
 
 usage() {
-    echo "./launch.sh <image> <tag>"
+    echo "./launch.sh <dir>"
     echo
     echo "Example:"
-    echo "  ./launch.sh buildbot-worker-ubuntu-2004 v3.1.0"
+    echo "  ./launch.sh buildbot-worker-ubuntu-2004"
     echo
     exit 1
 }
@@ -17,11 +16,10 @@ if [ "$1" = "" ]; then
     usage
 fi
 
-if [ "$2" = "" ]; then
-    usage
-fi
+# Get image name and version
+IMAGE=`grep MY_NAME $DIR/Dockerfile.base|awk 'BEGIN { FS = "\"" }; { print $2 }'`
+TAG=`grep MY_VERSION $DIR/Dockerfile.base|awk 'BEGIN { FS = "\"" }; { print $2 }'`
 
 docker container stop $IMAGE
 docker container rm $IMAGE
-#docker container run --name $IMAGE --network buildbot-net --env-file=$IMAGE/env openvpn_community/$IMAGE:$TAG
-docker container run --name $IMAGE --network buildbot-net --volume buildmaster:/var/lib/buildbot/masters/default/persistent openvpn_community/$IMAGE:$TAG
+docker container run -it --name $IMAGE --network buildbot-net --env-file=$DIR/env openvpn_community/$IMAGE:$TAG
