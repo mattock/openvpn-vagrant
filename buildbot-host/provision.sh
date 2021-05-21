@@ -4,6 +4,7 @@
 
 BASEDIR=/vagrant/buildbot-host
 VOLUME_DIR=/var/lib/docker/volumes/buildmaster/_data/
+WORKER_PASSWORD=vagrant
 
 # https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
 apt-get update
