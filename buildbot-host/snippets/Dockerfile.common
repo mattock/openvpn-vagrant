@@ -17,7 +17,6 @@ RUN set -ex; \
     /buildbot/install-mbedtls.sh; \
     rm -f /buildbot/install-mbedtls.sh
 
-
 # Install buildbot
 COPY scripts/install-buildbot.sh /buildbot/
 RUN set -ex; \
@@ -25,6 +24,7 @@ RUN set -ex; \
     rm -f /buildbot/install-buildbot.sh
 
 COPY buildbot.tac /buildbot/
+RUN mkdir -p /home
 
 CMD ["twistd", "--pidfile=", "--nodaemon", "--python=buildbot.tac"]
 
