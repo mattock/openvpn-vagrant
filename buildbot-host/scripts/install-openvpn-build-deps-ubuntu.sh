@@ -11,6 +11,7 @@ automake \
 build-essential \
 cmake \
 curl \
+fping \
 git \
 libcmocka-dev \
 libcmocka0 \
