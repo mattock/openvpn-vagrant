@@ -22,4 +22,4 @@ TAG=`grep MY_VERSION $DIR/Dockerfile.base|awk 'BEGIN { FS = "\"" }; { print $2 }
 
 docker container stop $IMAGE
 docker container rm $IMAGE
-docker container run -it --name $IMAGE --network buildbot-net --env-file=$DIR/env openvpn_community/$IMAGE:$TAG
+docker container run -it --name $IMAGE --network buildbot-net --cap-add NET_ADMIN --sysctl net.ipv6.conf.all.disable_ipv6=0 --env-file=$DIR/env openvpn_community/$IMAGE:$TAG
