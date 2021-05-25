@@ -39,5 +39,16 @@ cat > /etc/systemd/system/docker.service.d <<EOL
 ExecStart=
 ExecStart=/usr/bin/dockerd -H tcp://0.0.0.0:2375 -H fd:// --containerd=/run/containerd/containerd.sock
 EOL
+
+# Ensure that Docker daemon is IPv6-enabled. This is required for t_client
+# tests where OpenVPN server pushes IPv6 information to the newly built OpenVPN
+# client.
+cat > /etc/docker/daemon.json <<EOL
+{
+    "ipv6": true,
+    "fixed-cidr-v6": "fd00::/80"
+}
+EOL
+
 systemctl daemon-reload
 systemctl restart docker
