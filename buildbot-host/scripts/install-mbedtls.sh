@@ -12,3 +12,4 @@ export SHARED=1
 make clean
 make
 make install 
+ldconfig

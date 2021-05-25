@@ -20,6 +20,7 @@ COPY buildmaster/start_buildmaster.sh $BASEDIR
 COPY buildmaster/master.cfg $BASEDIR
 COPY buildmaster/master.ini $BASEDIR
 COPY buildmaster/worker.ini $BASEDIR
+COPY scripts/ensure-tun-is-present.sh $BASEDIR
 
 WORKDIR $BASEDIR
 
