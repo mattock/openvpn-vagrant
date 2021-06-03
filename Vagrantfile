@@ -153,8 +153,8 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "msibuilder" do |box|
-    box.vm.box = "mwrock/Windows2016"
-    box.vm.box_version = "0.3.0"
+    box.vm.box = "gusztavvargadr/windows-server"
+    box.vm.box_version = "1809.0.2012"
     box.vm.hostname = "msibuilder"
     box.vm.network "private_network", ip: "192.168.48.113"
     box.vm.synced_folder ".", "/vagrant", type: "virtualbox"
@@ -175,6 +175,20 @@ Vagrant.configure("2") do |config|
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
       vb.memory = 8096
+    end
+  end
+
+  config.vm.define "buildbot-worker-windows-server-2019" do |box|
+    box.vm.box = "gusztavvargadr/windows-server"
+    box.vm.box_version = "1809.0.2012"
+    box.vm.hostname = "buildbot-worker-windows-server-2019"
+    box.vm.network "private_network", ip: "192.168.48.115"
+    box.vm.synced_folder ".", "/vagrant", type: "virtualbox"
+    box.vm.provision "shell", path: "msibuilder.ps1"
+    box.vm.provision "shell", path: "buildbot.ps1"
+    box.vm.provider "virtualbox" do |vb|
+      vb.gui = false
+      vb.memory = 3072
     end
   end
 end
