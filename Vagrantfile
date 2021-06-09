@@ -182,6 +182,8 @@ Vagrant.configure("2") do |config|
   config.vm.define "buildbot-worker-windows-server-2019" do |box|
     box.vm.box = "gusztavvargadr/windows-server"
     box.vm.box_version = "1809.0.2012"
+    box.config.winrm.max_tries = 90
+    box.config.winrm.retry_delay = 2
     box.vm.hostname = "buildbot-worker-windows-server-2019"
     box.vm.network "private_network", ip: "192.168.48.115"
     box.vm.synced_folder ".", "/vagrant", type: "virtualbox"
