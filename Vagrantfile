@@ -191,7 +191,7 @@ Vagrant.configure("2") do |config|
     box.vm.synced_folder ".", "/vagrant", type: "virtualbox"
     box.vm.provision "shell", path: "base.ps1"
     box.vm.provision "shell", path: "msibuilder.ps1"
-    box.vm.provision "shell", path: "vcbuildtools.ps1"
+    box.vm.provision "shell", path: "vsbuildtools.ps1"
     box.vm.provision "shell", path: "vsarm64.ps1"
     box.vm.provision "shell", path: "vcpkg.ps1"
     box.vm.provision "shell", path: "python.ps1"
