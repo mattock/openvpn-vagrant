@@ -10,6 +10,9 @@ if (-Not (Test-Path $workdir)) {
 }
 Copy-Item "${vboxfs}\buildbot-host\buildbot.tac" $workdir
 
+Write-Host "Installing vswhere.exe to used by build steps"
+& choco.exe install -y vswhere
+
 Write-Host "Configuring buildbot to launch at boot time"
 & choco.exe install -y nssm
 & nssm.exe install buildbot-worker C:\Python39\Scripts\twistd.exe
