@@ -3,6 +3,7 @@ $vboxfs = "C:\vagrant"
 $workdir = "C:\Users\vagrant\buildbot"
 
 & pip.exe --no-cache-dir install twisted[tls]
+& pip.exe --no-cache-dir install pywin32
 & pip.exe --no-cache-dir install buildbot_worker==3.1.0
 if (-Not (Test-Path $workdir)) {
   New-item -Type directory $workdir
