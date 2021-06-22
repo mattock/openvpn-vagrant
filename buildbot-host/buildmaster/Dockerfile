@@ -14,12 +14,19 @@ RUN mkdir -p $BASEDIR
 
 # Required for latent docker buildslaves
 RUN pip3 install docker
+RUN set -ex; \
+    apk add patch
 
 COPY buildmaster/buildbot.tac $BASEDIR
 COPY buildmaster/start_buildmaster.sh $BASEDIR
 COPY buildmaster/master.cfg $BASEDIR
 COPY buildmaster/master.ini $BASEDIR
 COPY buildmaster/worker.ini $BASEDIR
+COPY buildmaster/vstudio.py.patch $BASEDIR
+
+RUN set -ex; \
+    patch /usr/lib/python3.8/site-packages/buildbot/steps/vstudio.py $BASEDIR/vstudio.py.patch
+
 COPY scripts/ensure-tun-is-present.sh $BASEDIR
 
 WORKDIR $BASEDIR
