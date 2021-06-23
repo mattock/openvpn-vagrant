@@ -28,5 +28,5 @@ Write-Host "Configuring buildbot to launch at boot time"
 & nssm.exe set buildbot-worker AppRotateBytes 1073741824
 & nssm.exe set buildbot-worker DisplayName buildbot-worker
 & nssm.exe set buildbot-worker ObjectName .\vagrant "vagrant"
-& nssm.exe set buildbot-worker Start SERVICE_DELAYED_AUTO_START
+& nssm.exe set buildbot-worker Start SERVICE_AUTO_START
 & nssm.exe set buildbot-worker Type SERVICE_WIN32_OWN_PROCESS
