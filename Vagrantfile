@@ -192,7 +192,7 @@ Vagrant.configure("2") do |config|
     box.vm.provision "shell", path: "base.ps1"
     box.vm.provision "shell", path: "msibuilder.ps1"
     box.vm.provision "shell", path: "vsbuildtools.ps1"
-    box.vm.provision "shell", path: "vcpkg.ps1"
+    box.vm.provision "shell", path: "build-deps.ps1"
     box.vm.provision "shell", path: "python.ps1"
     box.vm.provision "shell", path: "pip.ps1"
     box.vm.provision "shell", path: "buildbot.ps1"
