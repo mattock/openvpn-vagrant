@@ -9,6 +9,15 @@ if (-Not (Test-Path "${workdir}\openvpn")) {
   & git.exe clone -b dockertest https://github.com/mattock/openvpn.git "${workdir}\openvpn"
 }
 
+if (-Not (Test-Path "${workdir}\openvpn-build")) {
+  & git.exe clone https://github.com/OpenVPN/openvpn-build.git "${workdir}\openvpn-build"
+}
+
+if (-Not (Test-Path "${workdir}\openvpn-gui")) {
+  & git.exe clone https://github.com/OpenVPN/openvpn-gui.git "${workdir}\openvpn-gui"
+}
+
+
 if (-Not (Test-Path "${workdir}\vcpkg")) {
   & git.exe clone https://github.com/microsoft/vcpkg.git "${workdir}\vcpkg"
 }
