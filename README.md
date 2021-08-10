@@ -30,6 +30,8 @@ These VMs are special-purpose:
 * sbuild: build OpenVPN 2.x Debian/Ubuntu packages using [sbuild_wrapper](https://github.com/OpenVPN/sbuild_wrapper) (Ubuntu 18.04)
 * oas: [OpenVPN Access Server](https://openvpn.net/faq/what-is-openvpn-access-server/) for testing / experimentation (Ubuntu 18.04)
 * msibuilder: package OpenVPN as MSI using the [WiX toolset](http://wixtoolset.org) (Windows Server 2016)
+* buildbot-host: buildbot environment for OpenVPN 2.x (master with dockerized workers)
+* buildbot-worker-windows-server-2019: static (non-latent) Windows buildslave for buildbot
 
 # Building MSI packages
 
@@ -100,6 +102,19 @@ osslsigncode on openvpn-build-bionic:
       -out ../windows-msi/image/OpenVPN-2.5-beta1-x86.msi.signed
 
 Repeat the process for x86 and amd64.
+
+# Using the buildbot environment
+
+To spin up the buildbot environment use:
+
+    $ vagrant up buildbot-host
+
+At the end of provisioning you should have a fully functional, dockerized
+buildbot environment inside the buildbot-host VM. To do Windows testing also spin up the Windows worker:
+
+    $ vagrant up buildbot-worker-windows-server-2019
+
+For usage details refer to [buildbot-host/README.md](buildbot-host/README.md).
 
 # TODO
 
