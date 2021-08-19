@@ -9,3 +9,6 @@ $workdir = "C:\Users\vagrant\Downloads"
 
 Invoke-WebRequest -Uri https://wixtoolset.org/downloads/v3.14.0.4118/wix314.exe -Outfile "${workdir}/wix314.exe"
 & "${workdir}/wix314.exe" /q
+
+# Install cmake: used to build openvpn-gui
+& choco.exe install -y cmake
