@@ -1,5 +1,5 @@
 Write-Host "Setting up openvpn build dependencies with vcpkg"
-$workdir = "C:\Users\vagrant\opt"
+$workdir = "C:\users\vagrant\buildbot\windows-server-2019-static-msbuild"
 
 if (-Not (Test-Path $workdir)) {
   New-Item -Type directory $workdir
