@@ -32,3 +32,7 @@ foreach ($arch in $architectures) {
 
 # Ensure that OpenVPN build can find the dependencies
 & "${workdir}\vcpkg\vcpkg.exe" integrate install
+
+
+# Ensure that we can convert the man page from rst to html
+& pip.exe --no-cache-dir install docutils
