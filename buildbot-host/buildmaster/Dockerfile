@@ -23,6 +23,7 @@ COPY buildmaster/master.cfg $BASEDIR
 COPY buildmaster/master.ini $BASEDIR
 COPY buildmaster/worker.ini $BASEDIR
 COPY buildmaster/vstudio.py.patch $BASEDIR
+COPY buildmaster/build-openvpn-gui.ps1 $BASEDIR
 COPY buildmaster/msbuild-x64.bat $BASEDIR
 COPY buildmaster/msbuild-x64_x86.bat $BASEDIR
 COPY buildmaster/msbuild-x64_arm64.bat $BASEDIR
