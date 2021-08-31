@@ -1,9 +1,13 @@
 # Build openvpn-gui with MSVC
+#
+# Example of setting the environment variables:
+#
+# $Env:CMAKE_TOOLCHAIN_FILE = "C:\Users\john\vcpkg\scripts\buildsystems\vcpkg.cmake"
+# $Env:CMAKE = "C:\Program Files\CMake\bin\cmake.exe"
 
 $CWD = Get-Location
-
-$CMAKE="C:\Program Files\CMake\bin\cmake.exe"
-$CMAKE_TOOLCHAIN_FILE="C:\users\vagrant\buildbot\windows-server-2019-static-msbuild\vcpkg\scripts\buildsystems\vcpkg.cmake"
+$CMAKE=$Env:CMAKE
+$CMAKE_TOOLCHAIN_FILE=$Env:CMAKE_TOOLCHAIN_FILE
 
 # Enable running this script from anywhere
 cd $PSScriptRoot
