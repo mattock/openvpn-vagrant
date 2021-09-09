@@ -1,6 +1,6 @@
-Write-Host "Installing dependencies for building MSI packages"
+param ([string] $workdir)
 
-$workdir = "C:\Users\vagrant\Downloads"
+Write-Host "Installing dependencies for building MSI packages"
 
 & choco.exe install -y git --params "/GitAndUnixToolsOnPath"
 

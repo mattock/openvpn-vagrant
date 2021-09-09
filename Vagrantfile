@@ -159,7 +159,15 @@ Vagrant.configure("2") do |config|
     box.vm.network "private_network", ip: "192.168.48.113"
     box.vm.synced_folder ".", "/vagrant", type: "virtualbox"
     box.vm.provision "shell", path: "base.ps1"
-    box.vm.provision "shell", path: "msibuilder.ps1"
+    box.vm.provision "shell" do |s|
+      s.path = "msibuilder.ps1"
+      s.args = ["-workdir", "C:\\Users\\vagrant\\Downloads"]
+    end
+    box.vm.provision "shell", path: "vsbuildtools.ps1"
+    box.vm.provision "shell" do |s|
+      s.path = "build-deps.ps1"
+      s.args = ["-workdir", "C:\\Users\\vagrant\\build"]
+    end
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
       vb.memory = 3072
@@ -190,9 +198,15 @@ Vagrant.configure("2") do |config|
     box.vm.network "private_network", ip: "192.168.48.115"
     box.vm.synced_folder ".", "/vagrant", type: "virtualbox"
     box.vm.provision "shell", path: "base.ps1"
-    box.vm.provision "shell", path: "msibuilder.ps1"
+    box.vm.provision "shell" do |s|
+      s.path = "msibuilder.ps1"
+      s.args = ["-workdir", "C:\\Users\\vagrant\\Downloads"]
+    end
     box.vm.provision "shell", path: "vsbuildtools.ps1"
-    box.vm.provision "shell", path: "build-deps.ps1"
+    box.vm.provision "shell" do |s|
+      s.path = "build-deps.ps1"
+      s.args = ["-workdir", "C:\\users\\vagrant\\buildbot\\windows-server-2019-static-msbuild"]
+    end
     box.vm.provision "shell", path: "python.ps1"
     box.vm.provision "shell", path: "pip.ps1"
     box.vm.provision "shell", path: "buildbot.ps1"
