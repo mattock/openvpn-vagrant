@@ -7,7 +7,7 @@ if (-Not (Test-Path $workdir)) {
 }
 
 if (-Not (Test-Path "${workdir}\openvpn")) {
-  & git.exe clone -b dockertest https://github.com/mattock/openvpn.git "${workdir}\openvpn"
+  & git.exe clone -b master https://github.com/OpenVPN/openvpn.git "${workdir}\openvpn"
 }
 
 if (-Not (Test-Path "${workdir}\openvpn-build")) {
