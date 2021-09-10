@@ -164,6 +164,8 @@ Vagrant.configure("2") do |config|
       s.args = ["-workdir", "C:\\Users\\vagrant\\Downloads"]
     end
     box.vm.provision "shell", path: "vsbuildtools.ps1"
+    box.vm.provision "shell", path: "python.ps1"
+    box.vm.provision "shell", path: "pip.ps1"
     box.vm.provision "shell" do |s|
       s.path = "build-deps.ps1"
       s.args = ["-workdir", "C:\\Users\\vagrant\\build"]
@@ -203,12 +205,12 @@ Vagrant.configure("2") do |config|
       s.args = ["-workdir", "C:\\Users\\vagrant\\Downloads"]
     end
     box.vm.provision "shell", path: "vsbuildtools.ps1"
+    box.vm.provision "shell", path: "python.ps1"
+    box.vm.provision "shell", path: "pip.ps1"
     box.vm.provision "shell" do |s|
       s.path = "build-deps.ps1"
       s.args = ["-workdir", "C:\\users\\vagrant\\buildbot\\windows-server-2019-static-msbuild"]
     end
-    box.vm.provision "shell", path: "python.ps1"
-    box.vm.provision "shell", path: "pip.ps1"
     box.vm.provision "shell", path: "buildbot.ps1"
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
