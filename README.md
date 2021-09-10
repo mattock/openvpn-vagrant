@@ -29,79 +29,28 @@ These VMs are special-purpose:
 * openvpn-build-bionic: cross-compile OpenVPN using [openvpn-build](https://github.com/OpenVPN/openvpn-build) (Ubuntu 18.04)
 * sbuild: build OpenVPN 2.x Debian/Ubuntu packages using [sbuild_wrapper](https://github.com/OpenVPN/sbuild_wrapper) (Ubuntu 18.04)
 * oas: [OpenVPN Access Server](https://openvpn.net/faq/what-is-openvpn-access-server/) for testing / experimentation (Ubuntu 18.04)
-* msibuilder: package OpenVPN as MSI using the [WiX toolset](http://wixtoolset.org) (Windows Server 2016)
+* msibuilder: build package OpenVPN and package it as MSI using the [WiX toolset](http://wixtoolset.org) (Windows Server 2019)
 * buildbot-host: buildbot environment for OpenVPN 2.x (master with dockerized workers)
 * buildbot-worker-windows-server-2019: static (non-latent) Windows buildslave for buildbot
 
-# Building MSI packages
+# Building and packaging OpenVPN on Windows for Windows
 
-Building MSI packages is a two-phase process which requires using
-openvpn-build-bionic (Ubuntu 18.04) and msibuilder (Windows Server 2016) VMs.
-The former is used to produce Windows binaries and the latter to produce MSI
-packages. The openvpn-build directory on openvpn-build-bionic is shared with
-Samba so that msibuilder can access the build artifacts. The setup process is
-almost completely automated:
+Windows MSI packages can be built with the "msibuilder" VM. After provisioning
+you will find the build base directory under C:\\Users\\Vagrant\\build. To
+build just follow the instructions outlined in
+`openvpn-build/windows-msi/README.rst <https://github.com/OpenVPN/openvpn-build/blob/master/windows-msi/README.rst>`_
 
-    $ vagrant up openvpn-build-bionic
-    $ vagrant up msibuilder
+# Logging into the Windows VMs from Linux
 
 If you're running Vagrant on Linux you're almost certainly using
-[FreeRDP](https://www.freerdp.com/). That means you have to accept msibuilder
+[FreeRDP](https://www.freerdp.com/). That means you have to accept the Windows
 VM's host key before attempting to "vagrant rdp" into it:
 
     $ xfreerdp /v:127.0.0.1:3389
 
-Once the host key is in FreeRDP's cache you can connect to the instance:
+Once the host key is in FreeRDP's cache you can connect to the instance. For example:
 
     $ vagrant rdp msibuilder
-
-Once there, launch a Powershell session and mount the openvpn-build directory
-shared by openvpn-build-bionic:
-
-    PS> net use O: /USER:vagrant /PERSISTENT:YES \\192.168.48.110\openvpn-build vagrant
-
-Now SSH in to openvpn-build-bionic and build both 32-bit and 64-bit binaries.
-Until OpenVPN 2.5 is officially out you need to point the build system to an
-OpenVPN tarball that has MSI support:
-
-    $ vagrant ssh openvpn-build-bionic
-    $ cd openvpn-build/generic
-    $ OPENVPN_URL=http://build.openvpn.net/downloads/temp/msi/openvpn-2.5_git.tar.gz IMAGEROOT=`pwd`/image-win32 CHOST=i686-w64-mingw32 CBUILD=x86_64-pc-linux-gnu ./build
-    $ OPENVPN_URL=http://build.openvpn.net/downloads/temp/msi/openvpn-2.5_git.tar.gz IMAGEROOT=`pwd`/image-win64 CHOST=x86_64-w64-mingw32 CBUILD=x86_64-pc-linux-gnu ./build
-
-This produces Windows binaries which the msibuilder VM can access via the Samba
-share mounted to O:. Next bump the version numbers for MSI:
-
-    $ cd openvpn-build/windows-msi
-    $ ./bump-version.m4.sh
-
-Then edit openvpn-build/windows-msi/version.m4 to have the correct
-PACKAGE_VERSION as well as dependency versions.
-
-To produce MSI installers login to msibuilder:
-
-    $ vagrant rdp msibuilder
-
-Then in a Powershell session go to O:\windows-msi and build the MSI packages:
-
-    PS> cd O:\windows-msi
-    PS> cscript build.wsf msi
-
-If you want to code-sign the files in the MSI installer append something like this to the ./build command-line:
-
-    --sign --sign-pkcs12=digicert-user-mode-2022.pfx --sign-pkcs12-pass=secret \
-    --sign-timestamp=http://timestamp.verisign.com/scripts/timstamp.dll
-
-You also probably want to sign the MSI files. You can do this with
-osslsigncode on openvpn-build-bionic:
-
-    $ cd openvpn-build/generic
-    $ osslsigncode sign -h sha2 -pkcs12 digicert-user-mode-2022.pfx -pass secret \
-      -t http://timestamp.verisign.com/scripts/timstamp.dll \
-      -in ../windows-msi/image/OpenVPN-2.5-beta1-x86.msi \
-      -out ../windows-msi/image/OpenVPN-2.5-beta1-x86.msi.signed
-
-Repeat the process for x86 and amd64.
 
 # Using the buildbot environment
 
