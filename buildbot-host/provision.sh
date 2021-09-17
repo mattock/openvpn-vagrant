@@ -5,6 +5,7 @@
 BASEDIR=/vagrant/buildbot-host
 VOLUME_DIR=/var/lib/docker/volumes/buildmaster/_data/
 WORKER_PASSWORD=vagrant
+DEFAULT_USER=vagrant
 
 # https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
 apt-get update
@@ -29,7 +30,7 @@ echo $WORKER_PASSWORD > $VOLUME_DIR/secrets/worker-password
 chmod 600 $VOLUME_DIR/secrets/*
 
 # Ensure that "vagrant" user can run Docker commands
-usermod -a -G docker vagrant
+usermod -a -G docker $DEFAULT_USER
 
 # Ensure that docker is listening on TCP port (for launching latent docker
 # buildslaves)
