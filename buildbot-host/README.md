@@ -7,15 +7,24 @@ environment easily on any computer (Linux, Windows, MacOS).
 
 # Setup
 
-No setup should be necessary if you're using this in Vagrant. In other
-environments you need to run provision.sh manually. There may be failures as
-provision.sh has not yet been tested outside of Vagrant.
+No setup should be necessary if you're using this in Vagrant. Note that
+provisioning is only tested on Ubuntu 20.04 server and is unlikely to work on
+any other Ubuntu version without modifications. When setting this environment
+up outside of Vagrant you need to modify the variables in provision.sh. For
+example in AWS EC2 you'd use something like this:
+
+    BASEDIR=/home/ubuntu/openvpn-vagrant/buildbot-host
+    VOLUME_DIR=/var/lib/docker/volumes/buildmaster/_data/
+    WORKER_PASSWORD=vagrant
+    DEFAULT_USER=ubuntu
+
+You should definitely set a more secure WORKER_PASSWORD, both in provision.sh and in 
 
 ## Relevant files and directories:
 
 This environment utilizes a number of scripts for settings things up easily:
 
-* provision.sh: used (by Vagrant) to set up the Docker host
+* provision.sh: used to set up the Docker host
 * rebuild.sh: rebuild a single Docker image
 * rebuild-all.sh: rebuild all Docker images
 * create-volumes.sh: create or recreate Docker volumes for the buildmaster and workers
