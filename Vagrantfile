@@ -158,6 +158,7 @@ Vagrant.configure("2") do |config|
     box.vm.hostname = "msibuilder"
     box.vm.network "private_network", ip: "192.168.48.113"
     box.vm.synced_folder ".", "/vagrant", type: "virtualbox"
+    box.vm.provision "shell", path: "evaltimer.ps1"
     box.vm.provision "shell", path: "base.ps1"
     box.vm.provision "shell" do |s|
       s.path = "msibuilder.ps1"
@@ -200,6 +201,7 @@ Vagrant.configure("2") do |config|
     box.vm.hostname = "buildbot-worker-windows-server-2019"
     box.vm.network "private_network", ip: "192.168.48.115"
     box.vm.synced_folder ".", "/vagrant", type: "virtualbox"
+    box.vm.provision "shell", path: "evaltimer.ps1"
     box.vm.provision "shell", path: "base.ps1"
     box.vm.provision "shell" do |s|
       s.path = "msibuilder.ps1"
