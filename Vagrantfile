@@ -212,7 +212,16 @@ Vagrant.configure("2") do |config|
       s.path = "build-deps.ps1"
       s.args = ["-workdir", "C:\\users\\vagrant\\buildbot\\windows-server-2019-static-msbuild"]
     end
-    box.vm.provision "shell", path: "buildbot.ps1"
+    box.vm.provision "shell" do |s|
+      s.path = "buildbot.ps1"
+      s.args = ["-openvpnvagrant", "C:\\vagrant",
+                "-workdir", "C:\\Users\\vagrant\\buildbot",
+                "-buildmaster", "192.168.48.114",
+                "-workername", "windows-server-2019-static",
+                "-workerpass", "vagrant",
+                "-user", "vagrant",
+                "-password", "vagrant"]
+    end
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
       vb.memory = 3072
