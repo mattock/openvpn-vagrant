@@ -1,3 +1,5 @@
 .vagrant
 ubuntu-*-cloudimg-console.log
 *.swp
+buildbot-host/buildmaster/master.ini
+buildbot-host/buildmaster/worker.ini
