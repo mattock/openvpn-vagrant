@@ -2,10 +2,15 @@
 #
 # Provision a Docker host for running Buildbot master and workers
 
-BASEDIR=/vagrant/buildbot-host
-VOLUME_DIR=/var/lib/docker/volumes/buildmaster/_data/
-WORKER_PASSWORD=vagrant
-DEFAULT_USER=vagrant
+# Load default provisioning configuration and custom provisioning
+# configuration, if any.
+test -r ./provision-default.env && . ./provision-default.env
+test -r ./provision.env && . ./provision.env
+
+# Do not reprovision unless in Vagrant
+if [ -f "${BASEDIR}/.provision.sh-ran" ] && [ "${DEFAULT_USER}" != "vagrant" ]; then
+    exit 0
+fi
 
 # https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
 apt-get update
@@ -57,3 +62,5 @@ systemctl restart docker
 cd $BASEDIR
 ./rebuild-all.sh
 ./create-volumes.sh
+
+touch "${BASEDIR}/.provision.sh-ran"
