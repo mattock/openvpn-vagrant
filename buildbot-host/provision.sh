@@ -4,8 +4,11 @@
 
 # Load default provisioning configuration and custom provisioning
 # configuration, if any.
-test -r ./provision-default.env && . ./provision-default.env
-test -r ./provision.env && . ./provision.env
+
+BASEDIR=`dirname "$0"`
+
+test -r "${BASEDIR}/provision-default.env" && . "${BASEDIR}/provision-default.env"
+test -r "${BASEDIR}/provision.env" && . "${BASEDIR}/provision.env"
 
 # Do not reprovision unless in Vagrant
 if [ -f "${BASEDIR}/.provision.sh-ran" ] && [ "${DEFAULT_USER}" != "vagrant" ]; then
@@ -60,7 +63,7 @@ systemctl daemon-reload
 systemctl restart docker
 
 cd $BASEDIR
-./rebuild-all.sh
-./create-volumes.sh
+"${BASEDIR}/rebuild-all.sh"
+"${BASEDIR}/create-volumes.sh"
 
 touch "${BASEDIR}/.provision.sh-ran"

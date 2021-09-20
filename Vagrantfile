@@ -182,7 +182,8 @@ Vagrant.configure("2") do |config|
     box.vm.hostname = "buildbot-host"
     box.vm.network "private_network", ip: "192.168.48.114"
     box.vm.synced_folder ".", "/vagrant", type: "virtualbox"
-    box.vm.provision "shell", path: "buildbot-host/provision.sh"
+    box.vm.provision "shell",
+      inline: "/bin/sh /vagrant/buildbot-host/provision.sh"
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
       vb.memory = 8096
