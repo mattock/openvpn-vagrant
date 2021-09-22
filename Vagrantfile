@@ -153,12 +153,77 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "msibuilder" do |box|
-    box.vm.box = "mwrock/Windows2016"
-    box.vm.box_version = "0.3.0"
+    box.vm.box = "gusztavvargadr/windows-server"
+    box.vm.box_version = "1809.0.2012"
     box.vm.hostname = "msibuilder"
     box.vm.network "private_network", ip: "192.168.48.113"
     box.vm.synced_folder ".", "/vagrant", type: "virtualbox"
-    box.vm.provision "shell", path: "msibuilder.ps1"
+    box.vm.provision "shell", path: "evaltimer.ps1"
+    box.vm.provision "shell", path: "base.ps1"
+    box.vm.provision "shell" do |s|
+      s.path = "msibuilder.ps1"
+      s.args = ["-workdir", "C:\\Users\\vagrant\\Downloads"]
+    end
+    box.vm.provision "shell", path: "vsbuildtools.ps1"
+    box.vm.provision "shell", path: "python.ps1"
+    box.vm.provision "shell", path: "pip.ps1"
+    box.vm.provision "shell" do |s|
+      s.path = "build-deps.ps1"
+      s.args = ["-workdir", "C:\\Users\\vagrant\\build"]
+    end
+    box.vm.provider "virtualbox" do |vb|
+      vb.gui = false
+      vb.memory = 3072
+    end
+  end
+
+  config.vm.define "buildbot-host" do |box|
+    box.vm.box = "ubuntu/focal64"
+    box.vm.box_version = "20210415.0.0"
+    box.vm.hostname = "buildbot-host"
+    box.vm.network "private_network", ip: "192.168.48.114"
+    box.vm.synced_folder ".", "/vagrant", type: "virtualbox"
+    box.vm.provision "shell",
+      inline: "/bin/sh /vagrant/buildbot-host/provision.sh"
+    box.vm.provider "virtualbox" do |vb|
+      vb.gui = false
+      vb.memory = 8096
+    end
+  end
+
+  config.vm.define "buildbot-worker-windows-server-2019" do |box|
+    box.vm.box = "gusztavvargadr/windows-server"
+    box.vm.box_version = "1809.0.2012"
+    box.winrm.max_tries = 90
+    box.winrm.retry_delay = 2
+    box.winrm.timeout = 360
+    box.vm.boot_timeout = 360
+    box.vm.hostname = "buildbot-worker-windows-server-2019"
+    box.vm.network "private_network", ip: "192.168.48.115"
+    box.vm.synced_folder ".", "/vagrant", type: "virtualbox"
+    box.vm.provision "shell", path: "evaltimer.ps1"
+    box.vm.provision "shell", path: "base.ps1"
+    box.vm.provision "shell" do |s|
+      s.path = "msibuilder.ps1"
+      s.args = ["-workdir", "C:\\Users\\vagrant\\Downloads"]
+    end
+    box.vm.provision "shell", path: "vsbuildtools.ps1"
+    box.vm.provision "shell", path: "python.ps1"
+    box.vm.provision "shell", path: "pip.ps1"
+    box.vm.provision "shell" do |s|
+      s.path = "build-deps.ps1"
+      s.args = ["-workdir", "C:\\users\\vagrant\\buildbot\\windows-server-2019-static-msbuild"]
+    end
+    box.vm.provision "shell" do |s|
+      s.path = "buildbot.ps1"
+      s.args = ["-openvpnvagrant", "C:\\vagrant",
+                "-workdir", "C:\\Users\\vagrant\\buildbot",
+                "-buildmaster", "192.168.48.114",
+                "-workername", "windows-server-2019-static",
+                "-workerpass", "vagrant",
+                "-user", "vagrant",
+                "-password", "vagrant"]
+    end
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
       vb.memory = 3072
