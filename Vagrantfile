@@ -178,16 +178,20 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "buildbot-host" do |box|
-    box.vm.box = "ubuntu/focal64"
-    box.vm.box_version = "20210415.0.0"
+    box.vm.box = "generic/ubuntu2004"
+    box.vm.box_version = "3.4.2"
     box.vm.hostname = "buildbot-host"
     box.vm.network "private_network", ip: "192.168.48.114"
-    box.vm.synced_folder ".", "/vagrant", type: "virtualbox"
+    box.vm.synced_folder ".", "/vagrant"
     box.vm.provision "shell",
       inline: "/bin/sh /vagrant/buildbot-host/provision.sh"
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
       vb.memory = 8096
+    end
+    box.vm.provider "hyperv" do |hv, override|
+      hv.maxmemory = 8096
+      hv.memory = 8096
     end
   end
 
@@ -200,7 +204,7 @@ Vagrant.configure("2") do |config|
     box.vm.boot_timeout = 360
     box.vm.hostname = "buildbot-worker-windows-server-2019"
     box.vm.network "private_network", ip: "192.168.48.115"
-    box.vm.synced_folder ".", "/vagrant", type: "virtualbox"
+    box.vm.synced_folder ".", "/vagrant"
     box.vm.provision "shell", path: "evaltimer.ps1"
     box.vm.provision "shell", path: "base.ps1"
     box.vm.provision "shell" do |s|
@@ -218,7 +222,7 @@ Vagrant.configure("2") do |config|
       s.path = "buildbot.ps1"
       s.args = ["-openvpnvagrant", "C:\\vagrant",
                 "-workdir", "C:\\Users\\vagrant\\buildbot",
-                "-buildmaster", "192.168.48.114",
+                "-buildmaster", "172.30.55.25",
                 "-workername", "windows-server-2019-static",
                 "-workerpass", "vagrant",
                 "-user", "vagrant",
@@ -227,6 +231,10 @@ Vagrant.configure("2") do |config|
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
       vb.memory = 3072
+    end
+    box.vm.provider "hyperv" do |hv, override|
+      hv.maxmemory = 3072
+      hv.memory = 3072
     end
   end
 end
