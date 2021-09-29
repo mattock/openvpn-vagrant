@@ -20,6 +20,9 @@ RUN set -ex; \
 COPY buildmaster/buildbot.tac $BASEDIR
 COPY buildmaster/start_buildmaster.sh $BASEDIR
 COPY buildmaster/master.cfg $BASEDIR
+COPY buildmaster/tclient_steps.cfg $BASEDIR
+COPY buildmaster/common_unix_steps.cfg $BASEDIR
+COPY buildmaster/common_windows_steps.cfg $BASEDIR
 COPY buildmaster/master*.ini $BASEDIR/
 COPY buildmaster/worker*.ini $BASEDIR/
 COPY buildmaster/vstudio.py.patch $BASEDIR
