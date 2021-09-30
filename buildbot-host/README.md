@@ -96,6 +96,27 @@ Then from the "buildmaster" subdirectory:
 
 # Debugging
 
+## Worker stalling in "Preparing worker" stage
+
+If your workers hang indefinitely at "Preparing worker" stage then the problem
+is almost certainly a broken container image. Usually building the Docker image
+failed in a way that buildbot did not install properly, which caused the "CMD"
+at the end of the Dockerfile to fail. The fix is to nuke the image, fix the problem and
+rebuild the image. Get the ID of the image that does not work:
+
+    docker container ls
+
+Remove it:
+
+    docker container rm -f <id>
+
+(Attempt to) Fix the problem. Then rebuild the image and ensure that the process works:
+
+    cd buildbot-host
+    ./rebuild.sh buildbot-worker-<something>
+
+The rebuild.sh expect a worker directory as its one and only parameter.
+
 ## Debugging build or connectivity test issues
 
 Probably the easiest way debug issues on workers (e.g. missing build
