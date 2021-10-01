@@ -141,11 +141,11 @@ you're just changing config files.
 
 Buildmaster has several configuration files:
 
-    * **master.cfg**: this is the Python code that drives logic in Buildbot; it should have as little configuration it is as possible
-    * **master-default.ini**: the default master configuration, contains Docker and Git settings
-    * **master.ini**: overrides settings in master-default.ini completely, if present
-    * **worker-default.ini**: the default worker configuration, contains a list of workers and their settings
-    * **worker.ini**: overrides settings in worker-default.ini completely, if present
+* *master.cfg*: this is the Python code that drives logic in Buildbot; it should have as little configuration it is as possible
+* *master-default.ini*: the default master configuration, contains Docker and Git settings
+* *master.ini*: overrides settings in master-default.ini completely, if present
+* *worker-default.ini*: the default worker configuration, contains a list of workers and their settings
+* *worker.ini*: overrides settings in worker-default.ini completely, if present
 
 While you can launch a buildmaster with default settings just fine, you
 probably want to copy *master-default.ini* and *worker-default.ini* as *master.ini*
