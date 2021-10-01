@@ -13,11 +13,23 @@ automake \
 build-essential \
 cmake \
 curl \
+debhelper \
+dh-autoreconf \
+dh-strip-nondeterminism \
+dpkg-dev \
+dwz \
+fakeroot \
 fping \
 git \
+groff-base \
+intltool-debian \
 iproute2 \
 libcmocka-dev \
 libcmocka0 \
+libdebconfclient0 \
+libdpkg-perl \
+libfakeroot \
+libfile-stripnondeterminism-perl \
 liblz4-dev \
 liblzo2-dev \
 libpam-dev \
@@ -26,8 +38,11 @@ libssl-dev \
 libtool \
 make \
 net-tools \
+po-debconf \
+python3-docutils \
 python3-dev \
 python3-pip \
+python3-roman \
 python3-setuptools \
 python3-wheel
 
