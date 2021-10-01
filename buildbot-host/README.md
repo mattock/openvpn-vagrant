@@ -1,7 +1,10 @@
 # Introduction
 
-This is OpenVPN 2.x CI/CD system built on top of Buildbot using Vagrant,
-a virtualization layer (Virtualbox/Hyper-V) and Docker.
+This is OpenVPN 2.x CI/CD system built on top of Buildbot using Vagrant, a
+virtualization layer (Virtualbox/Hyper-V) and Docker. Here's an overview of the
+design (details vary depending on the deployment):
+
+![Buildbot architecture overview](diagrams/buildbot-architecture-overview.png)
 
 The system does not require Vagrant, Virtualbox or Hyper-V  - those are only a
 convenience to allow setting up an isolated environment easily on any computer
