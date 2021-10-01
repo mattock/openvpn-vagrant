@@ -1,42 +1,106 @@
 # Introduction
 
 This is OpenVPN 2.x CI/CD system built on top of Buildbot using Vagrant,
-Virtualbox and Docker. The buildsystem itself does not require Vagrant or
-Virtualbox - those are only a convenience to allow setting up an isolated
-environment easily on any computer (Linux, Windows, MacOS).
+a virtualization layer (Virtualbox/Hyper-V) and Docker.
+
+The system does not require Vagrant, Virtualbox or Hyper-V  - those are only a
+convenience to allow setting up an isolated environment easily on any computer
+(Linux, Windows, MacOS).
+
+This system has been tested on:
+
+* Vagrant + Virtualbox on Fedora Linux 34
+* Vagrant + Virtualbox Windows 10
+* Vagrant + Hyper-V on Windows
+* Amazon EC2 Ubuntu 20.04 server instance (t3a.large)
+
+The whole system is configured to use 8GB of memory. However, it could potentially run in less, because
+all the buildbot workers that do the heavy lifting are either: 
+
+# Supported build types
+
+Right now this build system is able to do the following build types:
+
+* Basic Unix compile tests using arbitrary, configurable configure options
+* Unix connectivity tests using t_client.sh (see OpenVPN Git repository)
+* Native Windows builds using MSVC to (cross-)compile for x86, x64 and arm64 plus MSI packaging and signing
+* Debian/Ubuntu packaging (partially implemented)
+
+New build types and build steps can be added easily.
 
 # Setup
 
-No setup should be necessary if you're using this in Vagrant. Note that
-provisioning is only tested on Ubuntu 20.04 server and is unlikely to work on
-any other Ubuntu version without modifications. When setting this environment
-up outside of Vagrant you need to modify the variables in provision.sh. For
-example in AWS EC2 you'd use something like this:
+No setup should be necessary if you're using this in Vagrant. You just do
 
-    BASEDIR=/home/ubuntu/openvpn-vagrant/buildbot-host
+    $ vagrant up buildbot-host
+
+and once that has finished you can adapt buildbot configuration to your needs,
+rebuild the buildmaster container and start using the system.
+
+Note that provisioning is only tested on Ubuntu 20.04 server and is unlikely to
+work on any other Ubuntu or Debian version without modifications. When setting
+this environment up outside of Vagrant you should do
+
+    $ cp provision-default.env provision.env
+
+then modify *provision.env* to look reasonable. For example in AWS EC2 you'd
+use something like this:
+
     VOLUME_DIR=/var/lib/docker/volumes/buildmaster/_data/
-    WORKER_PASSWORD=vagrant
+    WORKER_PASSWORD=mysecretpassword
     DEFAULT_USER=ubuntu
 
-You should definitely set a more secure WORKER_PASSWORD, both in provision.sh and in 
+The values get passed to *provision.sh*, which configures things accordingly.
 
 ## Relevant files and directories:
 
-This environment utilizes a number of scripts for settings things up easily:
+This environment utilizes a number of scripts for settings things up. The
+following script are used internally and typically you would not touch them:
 
-* provision.sh: used to set up the Docker host
-* rebuild.sh: rebuild a single Docker image
-* rebuild-all.sh: rebuild all Docker images
-* create-volumes.sh: create or recreate Docker volumes for the buildmaster and workers
-* launch.sh: launch a buildbot worker
-* buildmaster/launch.sh: launch the buildmaster
+* *provision.sh*: used to set up the Docker host
+* *create-volumes.sh*: create or recreate Docker volumes for the buildmaster and workers
+
+Most of the time you'd be using these scripts:
+
+* *rebuild.sh*: rebuild a single Docker image
+* *rebuild-all.sh*: rebuild all Docker images
+* *buildmaster/launch.sh*: launch the buildmaster
+
+If you want to experiment with static (non-latent) Docker buildbot workers you
+may also use:
+
+* *launch.sh*: launch a buildbot worker
 
 Here's a list of relevant directories:
 
-* *buildmaster*: files and configuration related to the buildmaster
+* *buildmaster*: files, directories and configuration related to the buildmaster
+    * *master-default.ini*: global/buildmaster settings (Git repo URLs etc). Does not get loaded if *master.ini* (below) is present.
+    * *master.ini*: local, unversioned config file with which you can override *master-default.ini*.
+    * *worker-default.ini*: buildbot worker settings. The \[DEFAULT\] section sets the defaults, which can be overridden on a per-worker basis. Does not get loaded if *worker.ini* (below) is present.
+    * *worker.ini*: local, unversioned config file with which you can override *worker-default.ini*.
+    * *master.cfg*: buildmaster's "configuration file" that is really just Python code. It is solely responsible for defining what Buildbot and its workers should do.
+    * *_steps.cfg*: these files contain build steps for different types of build. They are included (executed) in *master.cfg*. Their main purpose is to reduce the size of *master.cfg* and to keep things more organized.
+    * *debian*: this directory contains all the Debian and Ubuntu packaging files arranged by worker name. During Debian packaging builds the relevant files get copied to the Debian/Ubuntu worker.
 * *buildbot-worker-\<something\>*: files and configuration related to a worker
-* *scripts*: reusable worker initialization scripts
+    * *Dockerfile.base*: a "configuration file" that contains ARG entries that will drive the logic in the main Dockerfile, *snippets/Dockerfile.common*. Used when provisioning the container.
+    * *env*: sets environment variables that are required by the worker container (buildmaster, worker name, worker pass). Used when launching *static* containers. Not needed for *latent* workers. In other words, in most cases you can ignore the *env* file.
+* *scripts*: reusable worker initialization/provisioning scripts
 * *snippets*: configuration fragments; current only the reusable part of the Dockerfile
+
+# The Docker setup
+
+This Docker-based environment attempts to be stateless and self-contained.
+While all the containers have persistent volumes mounted on the host, only
+buildmaster actually utilizes the volume for anything (storing the worker
+password and the sqlite database). The worker containers are launched on-demand
+and get nuked afterwards. On next build everything starts from scratch.
+
+Build artefacts can be copied from the workers to the buildmaster before the
+worker exists, or copied elsewhere.
+
+The containers (master and workers) do not require any data to be present on
+the persistent volumes to work. The only exception is the worker password that
+needs to be in a file on buildmaster's persistent volume.
 
 # Development
 
@@ -164,14 +228,13 @@ For example:
 
 ## Wiping buildmaster's database
 
-This may be necessary if buildmaster gets stuck with failing latent docker workers
+In Vagrant it can be useful to occasionally destroy the buildmaster's database
+to clean up the webui:
 
     sudo rm /var/lib/docker/volumes/buildmaster/_data/libstate.sqlite
 
-This way buildmaster stops trying to use the old, broken worker config over and
-over again and stalling while doing so. There may be a way to cancel the
-failing build requests, but this is good enough in a Vagrant environment where
-OpenVPN buildbot development happens.
+You generally don't want to do this in production if you're interested in
+retaining the data about old builds.
 
 # Usage
 
