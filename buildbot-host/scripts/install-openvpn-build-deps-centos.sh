@@ -6,6 +6,8 @@ yum -y install epel-release
 yum -y install \
 autoconf \
 cmake \
+gcc \
+gcc-c++ \
 git \
 gnutls-devel \
 libtool \

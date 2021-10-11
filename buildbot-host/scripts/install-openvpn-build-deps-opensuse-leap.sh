@@ -5,6 +5,7 @@ autoconf \
 cmake \
 curl \
 gcc \
+gcc-c++ \
 git \
 gnutls-devel \
 gzip \
