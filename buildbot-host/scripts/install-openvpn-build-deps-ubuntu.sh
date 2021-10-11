@@ -20,6 +20,7 @@ dpkg-dev \
 dwz \
 fakeroot \
 fping \
+g++ \
 git \
 groff-base \
 intltool-debian \
