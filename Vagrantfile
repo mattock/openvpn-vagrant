@@ -3,6 +3,8 @@
 
 Vagrant.configure("2") do |config|
 
+  config.vagrant.plugins = [ "vagrant-vbguest" ]
+
   config.vm.define "centos-7" do |box|
     box.vm.box = "centos/7"
     box.vm.box_version = "1710.01"
