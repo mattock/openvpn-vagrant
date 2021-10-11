@@ -33,7 +33,16 @@ New build types and build steps can be added easily.
 
 # Setup
 
-No setup should be necessary if you're using this in Vagrant. You just do
+If you use Vagrant with Virtualbox you need to install Virtualbox Guest
+Additions to the VMs. The easiest way to do that is with
+[vagrant-vbguest](https://github.com/dotless-de/vagrant-vbguest):
+
+    $ vagrant plugin install vagrant-vbguest
+
+Without this plugin Virtualbox shared folders will not work and you will get
+errors when you create the VMs.
+
+After that you should be able to just do
 
     $ vagrant up buildbot-host
 
