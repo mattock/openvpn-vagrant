@@ -17,6 +17,12 @@ RUN set -ex; \
     /buildbot/install-mbedtls.sh; \
     rm -f /buildbot/install-mbedtls.sh
 
+# Install asio
+COPY scripts/install-asio.sh /buildbot/
+RUN set -ex; \
+    /buildbot/install-asio.sh; \
+    rm -f /buildbot/install-asio.sh
+
 # Install buildbot
 COPY scripts/install-buildbot.sh /buildbot/
 RUN set -ex; \
