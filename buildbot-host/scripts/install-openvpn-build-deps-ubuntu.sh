@@ -1,5 +1,7 @@
 #!/bin/sh
 #
+set -ex
+
 export DEBIAN_FRONTEND=noninteractive
 
 # Install build dependencies. Packages "fping" and "net-tools" are only

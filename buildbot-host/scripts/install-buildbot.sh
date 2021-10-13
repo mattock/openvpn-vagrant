@@ -1,6 +1,8 @@
 #!/bin/sh
 #
 # Install buildbot
+#
+set -ex
 
 BUILDBOT_VERSION=3.1.0
 

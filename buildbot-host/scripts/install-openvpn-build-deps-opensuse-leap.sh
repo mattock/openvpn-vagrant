@@ -1,5 +1,7 @@
 #!/bin/sh
 #
+set -ex
+
 zypper install -y \
 autoconf \
 cmake \
