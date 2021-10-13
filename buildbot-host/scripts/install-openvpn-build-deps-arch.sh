@@ -1,6 +1,9 @@
 #!/bin/sh
 #
 # Upgrade package cache and do a system upgrade
+#
+set -ex
+
 pacman -Syu
 
 # Install build dependencies
