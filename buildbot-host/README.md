@@ -1,8 +1,8 @@
 # Introduction
 
-This is OpenVPN 2.x CI/CD system built on top of Buildbot using Vagrant, a
-virtualization layer (Virtualbox/Hyper-V) and Docker. Here's an overview of the
-design (details vary depending on the deployment):
+This is CI/CD system built on top of Buildbot using Vagrant, a virtualization
+layer (Virtualbox/Hyper-V) and Docker. Here's an overview of the design
+(details vary depending on the deployment):
 
 ![Buildbot architecture overview](diagrams/buildbot-architecture-overview.png)
 
@@ -14,22 +14,22 @@ This system has been tested on:
 
 * Vagrant + Virtualbox on Fedora Linux 34
 * Vagrant + Virtualbox Windows 10
-* Vagrant + Hyper-V on Windows
+* Vagrant + Hyper-V on Windows 10
 * Amazon EC2 Ubuntu 20.04 server instance (t3a.large)
 
 The whole system is configured to use 8GB of memory. However, it could potentially run in less, because
 all the buildbot workers that do the heavy lifting are either: 
 
-# Supported build types
-
-Right now this build system is able to do the following build types:
+# Supported build types for OpenVPN 2.x
 
 * Basic Unix compile tests using arbitrary, configurable configure options
 * Unix connectivity tests using t_client.sh (see OpenVPN Git repository)
 * Native Windows builds using MSVC to (cross-)compile for x86, x64 and arm64 plus MSI packaging and signing
 * Debian/Ubuntu packaging (partially implemented)
 
-New build types and build steps can be added easily.
+# Supported build types for OpenVPN 3.x
+
+* Compile tests against OpenSSL and stable release of ASIO
 
 # Setup
 
@@ -91,13 +91,16 @@ Here's a list of relevant directories:
     * *worker-default.ini*: buildbot worker settings. The \[DEFAULT\] section sets the defaults, which can be overridden on a per-worker basis. Does not get loaded if *worker.ini* (below) is present.
     * *worker.ini*: local, unversioned config file with which you can override *worker-default.ini*.
     * *master.cfg*: buildmaster's "configuration file" that is really just Python code. It is solely responsible for defining what Buildbot and its workers should do.
-    * *_steps.cfg*: these files contain build steps for different types of build. They are included (executed) in *master.cfg*. Their main purpose is to reduce the size of *master.cfg* and to keep things more organized.
     * *debian*: this directory contains all the Debian and Ubuntu packaging files arranged by worker name. During Debian packaging builds the relevant files get copied to the Debian/Ubuntu worker.
 * *buildbot-worker-\<something\>*: files and configuration related to a worker
     * *Dockerfile.base*: a "configuration file" that contains ARG entries that will drive the logic in the main Dockerfile, *snippets/Dockerfile.common*. Used when provisioning the container.
     * *env*: sets environment variables that are required by the worker container (buildmaster, worker name, worker pass). Used when launching *static* containers. Not needed for *latent* workers. In other words, in most cases you can ignore the *env* file.
 * *scripts*: reusable worker initialization/provisioning scripts
 * *snippets*: configuration fragments; current only the reusable part of the Dockerfile
+* *openvpn*:
+    * files containing the build steps for OpenVPN 2.x (included by master.cfg)
+* *openvpn3*:
+    * files containing the build steps for OpenVPN 3.x (included by master.cfg)
 
 # The Docker setup
 
@@ -108,7 +111,7 @@ password and the sqlite database). The worker containers are launched on-demand
 and get nuked afterwards. On next build everything starts from scratch.
 
 Build artefacts can be copied from the workers to the buildmaster before the
-worker exists, or copied elsewhere.
+worker exits, or copied elsewhere during build.
 
 The containers (master and workers) do not require any data to be present on
 the persistent volumes to work. The only exception is the worker password that
@@ -266,8 +269,8 @@ Right now there is only one and you can launch with Vagrant:
 
     vagrant up buildbot-worker-windows-server-2019
 
-It will automatically connect to the buildmaster if provisioning went well.
-That said, provisioning Windows tends to be way more unreliable than
+The worker will automatically connect to the buildmaster if provisioning went
+well.  That said, provisioning Windows tends to be way more unreliable than
 provisioning Linux, so you may have to destroy and rebuild it a few times. The
 main reason for provisioning failures are the reboots that are required:
 Vagrant is sometimes unable to re-establish WinRM connectivity when the VM
@@ -291,10 +294,5 @@ workers, builders and projects being built.
 
 ## Project level
 
-Right now this environment only supports OpenVPN 2.x. But there's nothing
-preventing from doing CI/CD for other projects using the same framework:
-
 * OpenVPN 2.x
 * OpenVPN 3.x
-* tap-windows6
-* win-dco
