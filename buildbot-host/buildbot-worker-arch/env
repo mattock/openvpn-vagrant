@@ -1,0 +1,3 @@
+BUILDMASTER=buildmaster
+WORKERNAME=arch
+WORKERPASS=vagrant
