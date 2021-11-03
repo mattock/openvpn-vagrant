@@ -2,12 +2,14 @@
 #
 set -ex
 
+# pkcs11-helper-dev is only available in the EPEL repository
+yum -y install epel-release
+
 yum -y install \
 autoconf \
 autoconf-archive \
 automake \
-bzip2 \
-cmake \
+cmake3 \
 gcc \
 gcc-c++ \
 git \
@@ -26,15 +28,20 @@ pam-devel \
 pkcs11-helper-devel \
 pkgconfig \
 polkit \
+python36 \
+python36-dbus \
+python36-gobject \
+python36-pyOpenSSL \
 python3-devel \
-python3-dbus \
-python3-docutils \
-python3-gobject \
-python3-jinja2 \
+python-docutils \
 python3-pip \
-python3-pyOpenSSL \
 python3-setuptools \
 python3-wheel \
 selinux-policy-devel \
+tinyxml2 \
 tinyxml2-devel \
 zlib-devel
+
+# This is required for CentoOS 7 where "cmake" is missing, but "cmake3" is
+# present.
+test -e /usr/bin/cmake || ln -s /usr/bin/cmake3 /usr/bin/cmake
