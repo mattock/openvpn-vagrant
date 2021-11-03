@@ -173,6 +173,15 @@ Then from the "buildmaster" subdirectory:
 
     ./launch.sh v2.0.0
 
+# Stable and rolling release distros
+
+Most of the latent Docker workers are based on stable distribution, meaning
+that their package versions remain the same and only small patches are applied
+on top.  These are what most normal people use.
+
+Some workers are based on rolling release distros, though. If the Docker images
+are rebuilt regularly these distros help us spot build issues early on.
+
 # Debugging
 
 ## Worker stalling in "Preparing worker" stage
