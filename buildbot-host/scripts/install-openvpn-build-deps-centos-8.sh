@@ -2,12 +2,19 @@
 #
 set -ex
 
+# Required to install some openvpn3-linux dependencies
+yum -y install yum-utils
+yum-config-manager --set-enabled powertools
+
+# pkcs11-helper-dev is only available in the EPEL repository
+yum -y install epel-release
+
 yum -y install \
 autoconf \
 autoconf-archive \
 automake \
 bzip2 \
-cmake \
+cmake3 \
 gcc \
 gcc-c++ \
 git \
@@ -36,5 +43,6 @@ python3-pyOpenSSL \
 python3-setuptools \
 python3-wheel \
 selinux-policy-devel \
+timyxml2 \
 tinyxml2-devel \
 zlib-devel
