@@ -4,7 +4,7 @@
 #
 set -ex
 
-pacman -Syu
+yes|pacman -Syu
 
 # Install build dependencies
 pacman -S --noconfirm \
