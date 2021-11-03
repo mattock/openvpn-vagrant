@@ -4,7 +4,12 @@
 #
 set -ex
 
-ASIO_REF="asio-1-18-2"
+if [ "$1" = "" ]; then
+    echo "ERROR: must provide asio Git ref (branch, tag) as the first parameter!"
+    exit 1
+fi
+
+ASIO_REF=$1
 
 CWD=`pwd`
 
