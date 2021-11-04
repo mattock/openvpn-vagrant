@@ -9,12 +9,18 @@ yes|pacman -Syu
 # Install build dependencies
 pacman -S --noconfirm \
 autoconf \
+autoconf-archive \
 automake \
+bzip2 \
 cmake \
 curl \
+dbus-python \
 gcc \
 git \
+glib2 \
 gnutls \
+jsoncpp \
+libcap-ng \
 libtool \
 lz4 \
 lzo \
@@ -22,7 +28,12 @@ make \
 openssl \
 pam \
 pkcs11-helper \
+pkgconf \
+polkit \
 python \
+python-gobject \
 python-pip \
 python-setuptools \
-python-wheel
+python-wheel \
+tinyxml2 \
+zlib
