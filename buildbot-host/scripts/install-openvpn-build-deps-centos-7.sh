@@ -9,6 +9,7 @@ yum -y install \
 autoconf \
 autoconf-archive \
 automake \
+bzip2 \
 cmake3 \
 gcc \
 gcc-c++ \
