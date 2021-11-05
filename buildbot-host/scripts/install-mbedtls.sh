@@ -16,7 +16,9 @@ export SHARED=1
 make clean
 make
 make install
-ldconfig
+
+# On Alpine Linux ldconfig fails so we don't run it
+test -d /etc/apk || ldconfig
 
 cd $PWD
 rm -rf mbedtls-$MBEDTLS_VERSION
