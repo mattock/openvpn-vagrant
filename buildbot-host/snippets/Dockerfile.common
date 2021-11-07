@@ -11,12 +11,6 @@ RUN set -ex; \
     /buildbot/${DEPS_SH}; \
     rm -f ${DEPS_SH}
 
-# Install mbedTLS
-COPY scripts/install-mbedtls.sh /buildbot/
-RUN set -ex; \
-    /buildbot/install-mbedtls.sh; \
-    rm -f /buildbot/install-mbedtls.sh
-
 # Install buildbot
 COPY scripts/install-buildbot.sh /buildbot/
 RUN set -ex; \
@@ -25,15 +19,6 @@ RUN set -ex; \
 
 COPY buildbot.tac /buildbot/
 RUN mkdir -p /home/buildbot
-
-# Changing this line will force rebuild of asio
-ENV asio_as_of yyyy-mm-dd
-
-ARG ASIO_REF
-COPY scripts/install-asio.sh /buildbot/
-RUN set -ex; \
-    /buildbot/install-asio.sh $ASIO_REF; \
-    rm -f /buildbot/install-asio.sh
 
 CMD ["twistd", "--pidfile=", "--nodaemon", "--python=buildbot.tac"]
 

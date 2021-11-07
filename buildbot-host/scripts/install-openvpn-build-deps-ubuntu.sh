@@ -28,7 +28,7 @@ git \
 groff-base \
 intltool-debian \
 iproute2 \
-libjsoncpp1 \
+libasio-dev \
 libcap-ng-dev \
 libcmocka-dev \
 libcmocka0 \
@@ -40,6 +40,7 @@ libglib2.0-dev \
 libjsoncpp-dev \
 liblz4-dev \
 liblzo2-dev \
+libmbedtls-dev \
 libpam-dev \
 libpkcs11-helper-dev \
 libssl-dev \
