@@ -28,6 +28,7 @@ libxml2 \
 lz4-devel \
 lzo-devel \
 make \
+mbedtls-devel \
 openssl-devel \
 pam-devel \
 pkcs11-helper-devel \
@@ -43,6 +44,6 @@ python3-pyOpenSSL \
 python3-setuptools \
 python3-wheel \
 selinux-policy-devel \
-timyxml2 \
+tinyxml2 \
 tinyxml2-devel \
 zlib-devel

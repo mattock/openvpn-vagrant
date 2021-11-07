@@ -3,6 +3,7 @@
 set -ex
 
 yum -y install \
+asio-devel \
 autoconf \
 autoconf-archive \
 automake \
@@ -21,6 +22,7 @@ libxml2 \
 lz4-devel \
 lzo-devel \
 make \
+mbedtls-devel \
 openssl-devel \
 pam-devel \
 pkcs11-helper-devel \

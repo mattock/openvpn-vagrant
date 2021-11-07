@@ -2,6 +2,8 @@
 #
 set -ex
 
+# NOTE: we don't install mbedtls on CentOS 7 because it is too old
+
 # pkcs11-helper-dev is only available in the EPEL repository
 yum -y install epel-release
 
@@ -24,6 +26,7 @@ libxml2 \
 lz4-devel \
 lzo-devel \
 make \
+mbedtls-devel \
 openssl-devel \
 pam-devel \
 pkcs11-helper-devel \

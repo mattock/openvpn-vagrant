@@ -3,6 +3,7 @@
 set -ex
 
 zypper install -y \
+asio-devel \
 autoconf \
 autoconf-archive \
 automake \
@@ -24,6 +25,7 @@ libselinux-devel \
 libuuid-devel \
 lzo-devel \
 make \
+mbedtls-devel \
 openssl-devel \
 pam-devel \
 pkcs11-helper-devel \

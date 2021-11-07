@@ -8,6 +8,7 @@ yes|pacman -Syu
 
 # Install build dependencies
 pacman -S --noconfirm \
+asio \
 autoconf \
 autoconf-archive \
 automake \
@@ -25,6 +26,7 @@ libtool \
 lz4 \
 lzo \
 make \
+mbedtls \
 openssl \
 pam \
 pkcs11-helper \
