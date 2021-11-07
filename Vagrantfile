@@ -190,6 +190,7 @@ Vagrant.configure("2") do |config|
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
       vb.memory = 8096
+      #vb.customize ["modifyvm", :id, "--cpus", "4"]
     end
     box.vm.provider "hyperv" do |hv, override|
       hv.maxmemory = 8096
