@@ -44,6 +44,7 @@ libmbedtls-dev \
 libpam-dev \
 libpkcs11-helper-dev \
 libssl-dev \
+libsystemd-dev \
 libtool \
 libtinyxml2-dev \
 libxml2-utils \
