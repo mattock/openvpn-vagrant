@@ -1,4 +1,6 @@
 #!/bin/sh
+set -e
+
 usage() {
   echo "Usage: debian-package.sh -w <workername> -v <version-string> -s <sanitized-version>"
   echo
