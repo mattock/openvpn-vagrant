@@ -34,10 +34,8 @@ override_dh_auto_test:
 override_dh_auto_clean:
 	# These two get deleted on "make clean", but come in the tarball
 	# hack to keep them around after "make clean"
-	-test -f distro/rpm/openvpn.spec.not || mv distro/rpm/openvpn.spec distro/rpm/openvpn.spec.not
 	-test -f tests/t_client.sh.not || mv tests/t_client.sh tests/t_client.sh.not
 	dh_auto_clean
-	-test -f distro/rpm/openvpn.spec.not && mv distro/rpm/openvpn.spec.not distro/rpm/openvpn.spec
 	-test -f tests/t_client.sh.not && mv tests/t_client.sh.not tests/t_client.sh
 	# clean plugins
 	# $(MAKE) -C plugin/auth-pam/ clean
