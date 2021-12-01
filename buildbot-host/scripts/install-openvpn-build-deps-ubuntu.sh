@@ -42,6 +42,7 @@ liblz4-dev \
 liblzo2-dev \
 libmbedtls-dev \
 libpam-dev \
+libp11-kit-dev \
 libpkcs11-helper-dev \
 libssl-dev \
 libsystemd-dev \
