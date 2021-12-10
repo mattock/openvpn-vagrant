@@ -2,12 +2,12 @@
 set -e
 
 usage() {
-  echo "Usage: debian-package.sh -w <workername> -v <version-string> -s <sanitized-version>"
+  echo "Usage: debian-package.sh -w <workername> -c <committish> -s <sanitized-version>"
   echo
   echo "Example: debian-package.sh -w debian-10 -v 2.6_git -s 2.6"
 }
 
-while getopts "hw:v:s:" arg; do
+while getopts "hw:c:s:" arg; do
   case $arg in
     h)
       usage
@@ -16,8 +16,8 @@ while getopts "hw:v:s:" arg; do
     w)
       WORKERNAME=$OPTARG
       ;;
-    v)
-      VER=$OPTARG
+    c)
+      COMM=$OPTARG
       ;;
     s)
       SV=$OPTARG
@@ -25,13 +25,13 @@ while getopts "hw:v:s:" arg; do
   esac
 done
 
-if [ "$WORKERNAME" = "" ] || [ "$VER" = "" ] || [ "$SV" = "" ]; then
+if [ "$WORKERNAME" = "" ] || [ "$COMM" = "" ] || [ "$SV" = "" ]; then
   usage
   exit 1
 fi
 
-tar -zxf openvpn-$VER.tar.gz
-mv openvpn-$VER openvpn-$SV
+tar -zxf openvpn-$COMM.tar.gz
+mv openvpn-$COMM openvpn-$SV
 tar -zcf openvpn_$SV.orig.tar.gz openvpn-$SV
 tar -C openvpn-$SV -xvf debian.tar
 rm -f debian.tar
