@@ -23,6 +23,7 @@ gnutls \
 jsoncpp \
 libcap-ng \
 libtool \
+linux-headers \
 lz4 \
 lzo \
 make \
@@ -39,3 +40,6 @@ python-setuptools \
 python-wheel \
 tinyxml2 \
 zlib
+
+# Hack to ensure that kernel headers can be found from a predictable place
+ln -s /lib/modules/$(ls /lib/modules|head -n 1)/build /buildbot/kernel-headers

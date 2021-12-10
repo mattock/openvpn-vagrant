@@ -67,4 +67,13 @@ python3-setuptools \
 python3-wheel \
 uuid-dev
 
+# Install kernel headers for building ovpn-dco. Determining the correct package
+# name is challenging, so just try which ones install and which ones don't
+apt-get install -y -q --no-install-recommends linux-headers-generic || \
+apt-get install -y -q --no-install-recommends linux-headers-amd64
+
+# Hack to ensure that kernel headers can be found from a predictable place
+ln -s /lib/modules/$(ls /lib/modules|head -n 1)/build /buildbot/kernel-headers
+
+# Cleanup
 rm -rf /var/lib/apt/lists/*

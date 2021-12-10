@@ -17,6 +17,7 @@ glib2-devel \
 gnutls-devel \
 gzip \
 jsoncpp-devel \
+kernel-devel \
 libcap-ng-devel \
 liblz4-devel \
 libxml2-devel \
@@ -41,3 +42,8 @@ python3-pyOpenSSL \
 python3-setuptools \
 python3-wheel \
 tinyxml2-devel
+
+# Hack to ensure that kernel headers can be found from a predictable place
+# Right now kernel headers are not usable with ovpn-dco, so this is here mostly
+# for documentation purposes.
+ln -s /usr/src/linux /buildbot/kernel-headers
