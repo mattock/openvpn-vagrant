@@ -21,6 +21,7 @@ libuuid-devel \
 libxml2 \
 lz4-devel \
 lzo-devel \
+kernel-devel \
 make \
 mbedtls-devel \
 openssl-devel \
@@ -40,3 +41,6 @@ python3-wheel \
 selinux-policy-devel \
 tinyxml2-devel \
 zlib-devel
+
+# Hack to ensure that kernel headers can be found from a predictable place
+ln -s /usr/src/kernels/$(ls /usr/src/kernels|head -n 1) /buildbot/kernel-headers

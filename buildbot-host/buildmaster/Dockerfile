@@ -33,6 +33,7 @@ ADD buildmaster/debian $BASEDIR/debian
 ADD buildmaster/openvpn $BASEDIR/openvpn
 ADD buildmaster/openvpn3 $BASEDIR/openvpn3
 ADD buildmaster/openvpn3-linux $BASEDIR/openvpn3-linux
+ADD buildmaster/ovpn-dco $BASEDIR/ovpn-dco
 
 RUN set -ex; \
     patch /usr/lib/python3.8/site-packages/buildbot/steps/vstudio.py $BASEDIR/vstudio.py.patch
