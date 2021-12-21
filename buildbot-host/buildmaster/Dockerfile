@@ -28,7 +28,8 @@ COPY buildmaster/msbuild-x64.bat $BASEDIR
 COPY buildmaster/msbuild-x64_x86.bat $BASEDIR
 COPY buildmaster/msbuild-x64_arm64.bat $BASEDIR
 COPY buildmaster/sign-binaries.bat $BASEDIR
-COPY buildmaster/debian-package.sh $BASEDIR
+COPY buildmaster/debian-*.sh $BASEDIR/
+COPY buildmaster/debian-*.py $BASEDIR/
 ADD buildmaster/debian $BASEDIR/debian
 ADD buildmaster/openvpn $BASEDIR/openvpn
 ADD buildmaster/openvpn3 $BASEDIR/openvpn3
