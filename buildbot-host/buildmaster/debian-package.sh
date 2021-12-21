@@ -1,10 +1,10 @@
 #!/bin/sh
-set -e
+set -ex
 
 usage() {
-  echo "Usage: debian-package.sh -w <workername> -c <committish> -s <sanitized-version>"
+  echo "Usage: debian-package.sh -w <workername>"
   echo
-  echo "Example: debian-package.sh -w debian-10 -v 2.6_git -s 2.6"
+  echo "Example: debian-package.sh -w debian-10"
 }
 
 while getopts "hw:c:s:" arg; do
@@ -16,25 +16,23 @@ while getopts "hw:c:s:" arg; do
     w)
       WORKERNAME=$OPTARG
       ;;
-    c)
-      COMM=$OPTARG
-      ;;
-    s)
-      SV=$OPTARG
-      ;;
   esac
 done
 
-if [ "$WORKERNAME" = "" ] || [ "$COMM" = "" ] || [ "$SV" = "" ]; then
+TBV=`./debian-get-openvpn-version-tarball.py`
+SV=`./debian-get-openvpn-version-sanitized.py`
+
+if [ "$WORKERNAME" = "" ] || [ "$TBV" = "" ] || [ "$SV" = "" ]; then
   usage
   exit 1
 fi
 
-tar -zxf openvpn-$COMM.tar.gz
-mv openvpn-$COMM openvpn-$SV
+tar -zxf openvpn-$TBV.tar.gz
+mv openvpn-$TBV openvpn-$SV
 tar -zcf openvpn_$SV.orig.tar.gz openvpn-$SV
 tar -C openvpn-$SV -xvf debian.tar
 rm -f debian.tar
+./debian-generate-changelog.sh $SV
 mv debian-changelog openvpn-$SV/debian/changelog
 
 CWD=`pwd`
