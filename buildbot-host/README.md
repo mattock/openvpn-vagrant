@@ -31,7 +31,7 @@ all the buildbot workers that do the heavy lifting are either:
 
 * Compile tests against OpenSSL and stable release of ASIO
 
-# Setup
+# Setup in Vagrant
 
 If you use Vagrant with Virtualbox you need to install Virtualbox Guest
 Additions to the VMs. The easiest way to do that is with
@@ -49,10 +49,11 @@ After that you should be able to just do
 and once that has finished you can adapt buildbot configuration to your needs,
 rebuild the buildmaster container and start using the system.
 
-Note that provisioning is only tested on Ubuntu 20.04 server and is unlikely to
-work on any other Ubuntu or Debian version without modifications. When setting
-this environment up outside of Vagrant you should do
+# Setup outside Vagrant
 
+If you want to create this environment outside of Vagrant first do
+
+    $ cd openvpn-vagrant/buildbot-host
     $ cp provision-default.env provision.env
 
 then modify *provision.env* to look reasonable. For example in AWS EC2 you'd
@@ -62,7 +63,12 @@ use something like this:
     WORKER_PASSWORD=mysecretpassword
     DEFAULT_USER=ubuntu
 
-The values get passed to *provision.sh*, which configures things accordingly.
+Then provision the environment:
+
+    /full/path/to/buildbot-host/provision.sh
+
+Note that provisioning is only tested on Ubuntu 20.04 server and is unlikely to
+work on any other Ubuntu or Debian version without modifications.
 
 ## Relevant files and directories:
 
