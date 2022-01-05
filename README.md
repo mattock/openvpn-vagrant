@@ -100,7 +100,8 @@ In Virtualbox file sharing between host and guest is handled by with the Virtual
 either case your openvpn-vagrant directory will get mounted to /vagrant on buildbot-host, and C:\Vagrant
 on Windows hosts.
 
-For more details refer to [buildbot-host/README.md](buildbot-host/README.md).
+**NOTE:** you can spin up buildbot-host outside of Vagrant. For more details about that and other topics
+refer to [buildbot-host/README.md](buildbot-host/README.md).
 
 # TODO
 
