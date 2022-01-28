@@ -240,4 +240,18 @@ Vagrant.configure("2") do |config|
       hv.memory = 3072
     end
   end
+
+  config.vm.define "buildbot-worker-ubuntu-2004" do |box|
+    box.vm.box = "generic/ubuntu2004"
+    box.vm.box_version = "3.4.2"
+    box.vm.hostname = "buildbot-worker-ubuntu-2004"
+    box.vm.network "private_network", ip: "192.168.58.116"
+    box.vm.synced_folder ".", "/vagrant"
+    box.vm.provision "shell",
+      inline: "/bin/sh /vagrant/buildbot-host/scripts/setup-buildbot-ubuntu.sh"
+    box.vm.provider "virtualbox" do |vb|
+      vb.gui = false
+      vb.memory = 1280
+    end
+  end
 end
