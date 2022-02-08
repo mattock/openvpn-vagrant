@@ -85,7 +85,7 @@ build {
     inline = ["C:/Windows/Temp/pip.ps1"]
   }
   provisioner "powershell" {
-    inline = ["C:/Windows/Temp/pip.ps1"]
+    inline = ["C:/Windows/Temp/build-deps.ps1 -workdir C:\\Users\\buildbot\\buildbot\\windows-server-2019-latent-ec2-msbuild"]
   }
   provisioner "powershell" {
     inline = ["C:/Windows/Temp/create-buildbot-user.ps1 -password ${var.buildbot_windows_server_2019_buildbot_user_password}"]
