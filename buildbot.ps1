@@ -21,7 +21,7 @@ Write-Host "Installing vswhere.exe to used by build steps"
 
 Write-Host "Configuring buildbot to launch at boot time"
 & choco.exe install -y nssm
-& nssm.exe install buildbot-worker C:\Python39\Scripts\twistd.exe
+& nssm.exe install buildbot-worker C:\Python310\Scripts\twistd.exe
 & nssm.exe set buildbot-worker AppParameters "--nodaemon --python=buildbot.tac"
 & nssm.exe set buildbot-worker AppDirectory $workdir
 & nssm.exe set buildbot-worker AppExit Default Restart
