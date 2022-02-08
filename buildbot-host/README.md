@@ -155,6 +155,25 @@ To rebuild all containers (master and workers):
 Due to docker caching you can typically rebuild everything in a few seconds if
 you're just changing config files.
 
+## Building latent EC2 workers with Packer
+
+Certain workers such as windows-server-2019-latent-ec2 are built with Packer.
+Sensitive information like passwords have to be defined on Packer command-line
+or in environment variables. Here's an example of the latter approach:
+
+    PKR_VAR_buildbot_windows_server_2019_worker_password=<buildbot-worker-password>
+    PKR_VAR_buildbot_windows_server_2019_ec2_region=eu-central-1
+    PKR_VAR_buildbot_windows_server_2019_buildbot_user_password=<buildbot-windows-user-password>
+    PKR_VAR_buildbot_authenticode_password=<password-for-authenticode-certificate>
+    PKR_VAR_buildmaster_address=<buildmaster-ip-address>
+    PKR_VAR_buildbot_windows_server_2019_winrm_password=<windows-admin-password>
+
+To build the image use
+
+    packer build ec2.pkr.hcl
+
+It is assumed of course that you have configured AWS and Packer properly.
+
 ## Changing buildmaster configuration
 
 Buildmaster has several configuration files:
