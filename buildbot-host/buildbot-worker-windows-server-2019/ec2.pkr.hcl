@@ -38,6 +38,12 @@ source "amazon-ebs" "buildbot-worker-windows-server-2019" {
   instance_type    = "t3a.large"
   region           = var.buildbot_windows_server_2019_ec2_region
 
+  launch_block_device_mappings {
+    device_name           = "/dev/sda1"
+    volume_size           = 50
+    delete_on_termination = true
+  }
+
   source_ami_filter {
     filters     = {
       name                = "Windows_Server-2019-English-Full-Base-*"
