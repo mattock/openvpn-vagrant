@@ -105,6 +105,7 @@ build {
   provisioner "powershell" {
     inline = ["C:/Windows/Temp/vsbuildtools.ps1"]
   }
+  provisioner "windows-restart" {}
   sources = [
     "source.amazon-ebs.buildbot-worker-windows-server-2019"
   ]
