@@ -11,4 +11,4 @@ Invoke-WebRequest -Uri https://wixtoolset.org/downloads/v3.14.0.4118/wix314.exe 
 & "${workdir}/wix314.exe" /q
 
 # Install cmake: used to build openvpn-gui
-& choco.exe install -y cmake
+& choco.exe install -y cmake --installargs 'ADD_CMAKE_TO_PATH=System'
