@@ -106,6 +106,10 @@ build {
     inline = ["C:/Windows/Temp/vsbuildtools.ps1"]
   }
   provisioner "windows-restart" {}
+  provisioner "powershell" {
+    # make sure to run user data scripts on first boot from AMI
+    inline = ["C:/ProgramData/Amazon/EC2-Windows/Launch/Scripts/InitializeInstance.ps1 –Schedule"]
+  }
   sources = [
     "source.amazon-ebs.buildbot-worker-windows-server-2019"
   ]
