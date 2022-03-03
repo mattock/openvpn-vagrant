@@ -1,5 +1,0 @@
-ARG IMAGE=debian:unstable
-ARG DEPS_SH=install-openvpn-build-deps-ubuntu.sh
-ARG MY_NAME="buildbot-worker-debian-unstable"
-ARG MY_VERSION="v1.0.0"
-ARG ASIO_REF="master"

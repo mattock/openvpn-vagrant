@@ -1,5 +1,0 @@
-ARG IMAGE=centos:8
-ARG DEPS_SH=install-openvpn-build-deps-centos-8.sh
-ARG MY_NAME="buildbot-worker-centos-8"
-ARG MY_VERSION="v1.0.0"
-ARG ASIO_REF="asio-1-18-2"

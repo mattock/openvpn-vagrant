@@ -1,3 +1,0 @@
-BUILDMASTER=buildmaster
-WORKERNAME=debian-10-static
-WORKERPASS=vagrant

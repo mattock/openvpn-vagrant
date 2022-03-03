@@ -1,3 +1,0 @@
-BUILDMASTER=buildmaster
-WORKERNAME=debian-unstable
-WORKERPASS=vagrant

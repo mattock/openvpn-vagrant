@@ -1,5 +1,0 @@
-ARG IMAGE=fedora:35
-ARG DEPS_SH=install-openvpn-build-deps-fedora.sh
-ARG MY_NAME="buildbot-worker-fedora-35"
-ARG MY_VERSION="v1.0.0"
-ARG ASIO_REF="asio-1-18-2"

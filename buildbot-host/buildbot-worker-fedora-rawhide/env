@@ -1,3 +1,0 @@
-BUILDMASTER=buildmaster
-WORKERNAME=fedora-rawhide
-WORKERPASS=vagrant

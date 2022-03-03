@@ -1,3 +1,0 @@
-BUILDMASTER=buildmaster
-WORKERNAME=ubuntu-2104
-WORKERPASS=vagrant
