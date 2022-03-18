@@ -166,19 +166,76 @@ Vagrant.configure("2") do |config|
     box.vm.synced_folder ".", "/vagrant"
     box.vm.provision "shell", path: "scripts/evaltimer.ps1"
     box.vm.provision "shell", path: "scripts/base.ps1"
+    box.vm.provision "shell", path: "scripts/git.ps1"
+    box.vm.provision "shell", path: "scripts/cmake.ps1"
     box.vm.provision "shell" do |s|
       s.path = "scripts/msibuilder.ps1"
       s.args = ["-workdir", "C:\\Users\\vagrant\\Downloads"]
     end
-    box.vm.provision "shell", path: "scripts/vsbuildtools.ps1"
     box.vm.provision "shell", path: "scripts/python.ps1"
     box.vm.provision "shell", path: "scripts/pip.ps1"
+    box.vm.provision "shell", path: "scripts/vsbuildtools.ps1"
+    box.vm.provision "shell" do |s|
+      s.path = "scripts/vcpkg.ps1"
+      s.args = ["-workdir", "C:\\users\\vagrant\\buildbot\\windows-server-2019-static-msbuild"]
+    end
+    box.vm.provision "shell", path: "scripts/reboot.ps1"
     box.vm.provision "shell" do |s|
       s.path = "scripts/build-deps.ps1"
-      s.args = ["-workdir", "C:\\users\\vagrant\\buildbot\\windows-server-2019-static-msbuild"]
+      s.args = ["-workdir", "C:\\users\\vagrant\\buildbot\\windows-server-2019-static-msbuild",
+                "-openvpn_ref", "master",
+                "-openvpn_build_ref", "master",
+                "-openvpn_gui", "master",
+                "-openssl", "openssl3"]
     end
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
+      vb.cpus = 2
+      vb.memory = 3072
+    end
+    box.vm.provider "hyperv" do |hv, override|
+      hv.maxmemory = 3072
+      hv.memory = 3072
+    end
+  end
+
+  config.vm.define "msibuilder25" do |box|
+    box.vm.box = "gusztavvargadr/windows-server"
+    box.vm.box_version = "1809.0.2012"
+    box.winrm.max_tries = 90
+    box.winrm.retry_delay = 2
+    box.winrm.timeout = 360
+    box.vm.boot_timeout = 360
+    box.vm.hostname = "msibuilder25"
+    box.vm.network "private_network", ip: "192.168.58.114"
+    box.vm.synced_folder ".", "/vagrant"
+    box.vm.provision "shell", path: "scripts/evaltimer.ps1"
+    box.vm.provision "shell", path: "scripts/base.ps1"
+    box.vm.provision "shell", path: "scripts/git.ps1"
+    box.vm.provision "shell", path: "scripts/cmake.ps1"
+    box.vm.provision "shell" do |s|
+      s.path = "scripts/msibuilder.ps1"
+      s.args = ["-workdir", "C:\\Users\\vagrant\\Downloads"]
+    end
+    box.vm.provision "shell", path: "scripts/python.ps1"
+    box.vm.provision "shell", path: "scripts/pip.ps1"
+    box.vm.provision "shell", path: "scripts/vsbuildtools.ps1"
+    box.vm.provision "shell" do |s|
+      s.path = "scripts/vcpkg.ps1"
+      s.args = ["-workdir", "C:\\users\\vagrant\\buildbot\\windows-server-2019-static-msbuild"]
+    end
+    box.vm.provision "shell", path: "scripts/reboot.ps1"
+    box.vm.provision "shell" do |s|
+      s.path = "scripts/build-deps.ps1"
+      s.args = ["-workdir", "C:\\users\\vagrant\\buildbot\\windows-server-2019-static-msbuild",
+                "-openvpn_ref", "release/2.5",
+                "-openvpn_build_ref", "release/2.5",
+                "-openvpn_gui", "master",
+                "-openssl", "openssl"]
+    end
+    box.vm.provider "virtualbox" do |vb|
+      vb.gui = false
+      vb.cpus = 2
       vb.memory = 3072
     end
     box.vm.provider "hyperv" do |hv, override|
